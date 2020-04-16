@@ -1,0 +1,95 @@
+.logo_container
+{
+    height: 100px;
+}
+.logo 
+{
+    max-height: 100%;
+    width: auto;
+    display:block;
+}
+.navigation_bar
+{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: white;
+    border-bottom: 1px grey solid;
+    align-items: center;
+    height: 7%
+    
+    
+}
+nav ul
+{
+    display: flex;
+    flex-direction: row;
+    text-transform: uppercase;
+    list-style-type: none;
+
+    padding: 25px 25px 25px 25px;
+}
+nav li
+{
+    margin-right: 20px;
+    font-weight: bold;
+       
+}
+.centered_content
+{
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 70%;
+    height: 88%;
+    margin: auto;
+    text-align: center;
+    justify-content: space-around;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    flex-wrap: wrap;
+}
+.encryption_selection_button
+{
+    background-color: #7AC2E1;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    width: 30%;
+    height: 15%;
+        
+}
+.warning_message
+{
+    display: flex;
+    font-weight: bold;
+    align-items: center;
+    
+}
+footer
+{
+    width: 100%;
+    height: 5%;
+    position: absolute;
+    bottom: 0px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    
+    justify-content: center;
+    border-top: 1px grey solid;
+    
+    flex-grow: 1;
+}
+footer p
+{
+    color:grey;
+}
+

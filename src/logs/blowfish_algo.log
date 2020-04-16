@@ -1,0 +1,4 @@
+2020-04-14 13:33:24,713 - ERROR - blowfish_algo - Error during the encryption of a message with Blowfish. The message must be a bytes object
+2020-04-14 13:33:24,714 - ERROR - blowfish_algo - Error during the decryption of a message with Blowfish. The message must be a bytes object
+2020-04-14 13:35:37,461 - ERROR - blowfish_algo - Error during the decryption of a message with Blowfish. The message must be a string
+2020-04-14 13:40:47,048 - ERROR - blowfish_algo - Error during the decryption of a message with Blowfish. The message must be a string

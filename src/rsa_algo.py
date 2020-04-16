@@ -1,52 +1,62 @@
+"""Implementation of the RSA encryption method"""
+
 import logging
 import logging.handlers
+from Crypto.PublicKey import RSA
 from encryptioninterface import EncryptionInterface
 
-# =============================================================================
-# Implementation of the RSA encryption method
-# =============================================================================
 
-class RSA(EncryptionInterface):
-    
+class RSAAlgo(EncryptionInterface):
+
     def __init__(self):
-        
+
         self.logger = logging.getLogger(__name__)
         fh = logging.handlers.RotatingFileHandler('logs/' + __name__ + '.log', maxBytes=10000000, backupCount=100)
-        fh.setFormatter(logging.Formatter(fmt = '%(asctime)s - %(levelname)s - %(name)s - %(message)s'))
+        fh.setFormatter(logging.Formatter(fmt='%(asctime)s - %(levelname)s - %(name)s - %(message)s'))
         self.logger.addHandler(fh)
-        
-    
+
+
     def encrypt(self, message, key=0):
-        
-        
+
+
         if not isinstance(message, str):
-            
-            self.logger.error("Error during the encryption of a message with DES. The message must be a string")
+
+            self.logger.error("Error during the encryption of a message with RSA. The message must be a string")
             return False
-        
-        if not isinstance(key, str) or len(bytes(key, encoding='utf-8')) not in (16, 24, 32):
-            
-            self.logger.error("Error during the encryption of a message with DES. The key must be a string in ASCII format of length 16, 24 or 32")
+
+        if not isinstance(key, bytes):
+
+            self.logger.error("Error during the encryption of a message with RSA. The key must be a bytes object")
             return False
-        
-        
-        
-    
-        return encryptedMessage
-    
+
+        publicKey = RSA.importKey(key)
+        encryptedMessage = publicKey.encrypt(bytes(message, encoding="utf-8"), b"random")
+
+
+        return encryptedMessage[0]
+
     def decrypt(self, message, key=0):
-        
-        
+
+
         if not isinstance(message, bytes):
-            
-            self.logger.error("Error during the decryption of a message with DES. The message must be a string")
+
+            self.logger.error("Error during the decryption of a message with RSA. The message must be a bytes object")
             return False
-        
-        if not isinstance(key, str) or len(bytes(key, encoding='utf-8')) not in (16, 24, 32) :
-            
-            self.logger.error("Error during the decryption of a message with DES. The key must be an string in ASCII format of length 16, 24 or 32")
+
+        if not isinstance(key, bytes):
+
+            self.logger.error("Error during the decryption of a message with RSA. The key must be a bytes object")
             return False
-        
-        
-        
+
+        privateKey = RSA.importKey(key)
+        decryptedMessage = privateKey.decrypt(message)
+
         return decryptedMessage.decode("utf-8")
+
+    def generateKeysPair(self):
+
+        newKey = RSA.generate(4096, e=65537)
+        privateKey = newKey.exportKey("PEM")
+        publicKey = newKey.publickey().exportKey("PEM")
+
+        return (privateKey, publicKey)

@@ -1,0 +1,2 @@
+2020-04-16 13:18:28,687 - ERROR - vigenerecipher_algo - Error during the encryption of a message with the Vigenère cipher. The key cannot contain accents or special characters
+2020-04-16 13:18:28,688 - ERROR - vigenerecipher_algo - Error during the decryption of a message with the Vigenère cipher. The message must be a bytes object

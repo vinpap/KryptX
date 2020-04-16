@@ -1,96 +1,81 @@
+"""Implementation of the Enigma encryption method (M3 version used by the
+German navy)"""
+
 import logging
 import logging.handlers
 from pycipher import Enigma
 from encryptioninterface import EncryptionInterface
 
-# =============================================================================
-# Implementation of the Enigma encryption method  (M3 version used by the German
-# navy)
-# =============================================================================
-
 class EnigmaM3(EncryptionInterface):
-    
+
     def __init__(self):
-        
+
         self.logger = logging.getLogger(__name__)
         fh = logging.handlers.RotatingFileHandler('logs/' + __name__ + '.log', maxBytes=10000000, backupCount=100)
-        fh.setFormatter(logging.Formatter(fmt = '%(asctime)s - %(levelname)s - %(name)s - %(message)s'))
+        fh.setFormatter(logging.Formatter(fmt='%(asctime)s - %(levelname)s - %(name)s - %(message)s'))
         self.logger.addHandler(fh)
-        
-        
+
+
     def encrypt(self, message, key=0):
-        
-# =============================================================================
-#       key parameter is a table made of four elements: 
-#       - a tuple of three chars for the rotors start position 
-#       - a tuple of three int for the rotors used
-#       - a tuple of three chars for the ring settings 
-#       - a list of 10 tuples of two chars (at most) for the plugboard settings
-# =============================================================================
-        
+
+        """key parameter is a table made of four elements:
+       - a tuple of three chars for the rotors start position
+       - a tuple of three int for the rotors used
+       - a tuple of three chars for the ring settings
+       - a list of 10 tuples of two chars (at most) for the plugboard settings"""
+
         if not isinstance(message, str):
-            
+
             self.logger.error("Error during the encryption of a message with Enigma. The message must be a string")
             return False
-        
+
         if not self.checkKeyFormat(key):
-            
+
             self.logger.error("Error during the encryption of a message with Enigma. The settings provided do not follow the right format")
             return False
 
-        
+
         encryptedText = Enigma(settings=key[0],rotors=key[1],reflector='B',
-                            ringstellung=key[2],steckers=key[3]).encipher(message)  
-        
-        return encryptedText
-          
-    
+                               ringstellung=key[2],steckers=key[3]).encipher(message)
+
+        return bytes(encryptedText, encoding="utf-8")
+
+
     def decrypt(self, message, key=0):
-        
-# =============================================================================
-#       key parameter is a table made of four elements: 
-#       - a tuple of three char for the rotors start position 
-#       - a tuple of three int for the rotors used
-#       - a tuple of three chars for the ring settings 
-#       - a list of 10 tuples of two chars (at most) for the plugboard settings
-# =============================================================================
-        
-        if not isinstance(message, str):
-            
-            self.logger.error("Error during the decryption of a message with Enigma. The message must be a string")
+
+        """key parameter is a table made of four elements:
+       - a tuple of three chars for the rotors start position
+       - a tuple of three int for the rotors used
+       - a tuple of three chars for the ring settings
+       - a list of 10 tuples of two chars (at most) for the plugboard settings"""
+
+        if not isinstance(message, bytes):
+
+            self.logger.error("Error during the decryption of a message with Enigma. The message must be a bytes object")
             return False
-        
+
         if not self.checkKeyFormat(key):
-            
+
             self.logger.error("Error during the decryption of a message with Enigma. The settings provided do not follow the right format")
             return False
 
+        message = message.decode("utf-8")
+
         decryptedText = Enigma(settings=key[0],rotors=key[1],reflector='B',
-                        ringstellung=key[2],steckers=key[3]).decipher(message)  
-        
+                               ringstellung=key[2],steckers=key[3]).decipher(message)
+
         return decryptedText
-    
+
     def checkKeyFormat(self, key):
-        
-        if (not isinstance(key, list) or len(key) != 4) :
-            
+
+        if (not isinstance(key, list) or len(key) != 4):
+
             return False
-        
+
         for i in key:
-            
+
             if (not isinstance(i, tuple)) and (not isinstance(i, list)):
-                
+
                 return False
-        
+
         return True
-            
-            
-
-        
-        
-        
-
-    
-
-
-        
