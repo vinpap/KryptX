@@ -1,3 +1,7 @@
+h1
+{
+    font-size: 55px;
+}
 .logo_container
 {
     height: 100px;
@@ -54,16 +58,16 @@ nav li
 }
 .encryption_selection_button
 {
-    background-color: #7AC2E1;
+    background-color: #1761a0;
     border: none;
     color: white;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
-    width: 30%;
-    height: 15%;
+    font-size: 20px;
+    width: 25%;
+    height: 13%;
         
 }
 .warning_message

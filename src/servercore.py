@@ -11,20 +11,30 @@ class ServerCore:
     def __init__(self):
         
         self.logger = logging.getLogger(__name__)
-        fh = logging.handlers.RotatingFileHandler('logs/' + __name__ + '.log', maxBytes=10000000, backupCount=100)
+        fh = logging.handlers.RotatingFileHandler('logs/' + __name__ + '.log', 
+                                                  maxBytes=10000000, backupCount=100)
         fh.setFormatter(logging.Formatter(fmt='%(asctime)s - %(levelname)s - %(name)s - %(message)s'))
         self.logger.addHandler(fh)
         
         self.app = Flask(__name__)
         self.app.add_url_rule("/", "index", self.index)
         
+        self.loadBlueprints()
     
-    def launchServer (self) :
+    def loadBlueprints(self):
+        
+        """Each encryption method has its own blueprint. All the different
+        blueprints must be loaded here"""
+        
+        pass
+        
+    
+    def launchServer(self) :
         
         """This function is not intended for use in a production server!"""
 
         self.logger.info("Launching server")
-        self.app.run(debug = True, threaded=True)
+        self.app.run(debug=True, threaded=True)
         
     def index(self):
         
