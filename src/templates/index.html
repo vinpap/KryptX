@@ -11,15 +11,56 @@
             <div class="logo_container">
                 <img src="{{ url_for('static',filename='files/logo.png') }}" alt="logo" class="logo"/>
             </div>
-            
-            
-            <ul>
-                <li>All encryption methods</li>
-                <li>Historical</li>
-                <li>Outdated</li>
-                <li>Modern</li>
-                <li>Hashing algorithms</li>
-            </ul>
+            <div class="dropdown">
+                <div class="dropbtn">
+                    <span>ALL ENCRYPTION METHODS</span>
+                </div>
+                <div class="dropdown-content">
+                    {% for item in allAlgos %}
+                    <a href="#">{{ item }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="dropdown">
+                <div class="dropbtn">
+                    <span>HISTORICAL</span>
+                </div>
+                <div class="dropdown-content">
+                    {% for item in historicalAlgos %}
+                    <a href="#">{{ item }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="dropdown">
+                <div class="dropbtn">
+                    <span>OUTDATED</span>
+                </div>
+                <div class="dropdown-content">
+                    {% for item in outdatedAlgos %}
+                    <a href="#">{{ item }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="dropdown">
+                <div class="dropbtn">
+                    <span>MODERN</span>
+                </div>
+                <div class="dropdown-content">
+                    {% for item in modernAlgos %}
+                    <a href="#">{{ item }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="dropdown">
+                <div class="dropbtn">
+                    <span>HASHING</span>
+                </div>
+                <div class="dropdown-content">
+                    {% for item in hashingAlgos %}
+                    <a href="#">{{ item }}</a>
+                    {% endfor %}
+                </div>
+            </div>
         </nav>
         <div class="centered_content">
             
