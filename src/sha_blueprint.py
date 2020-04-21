@@ -16,8 +16,10 @@ class SHABlueprint(BaseBlueprint):
         fh.setFormatter(logging.Formatter(fmt='%(asctime)s - %(levelname)s - %(name)s - %(message)s'))
         self.logger.addHandler(fh)
         
+        self.__url = "/sha"
+        
         super().__init__('SHA', 'HASHING')
-        self.add_url_rule("/sha", "sha", self.SHA)
+        self.add_url_rule(self.__url, "sha", self.SHA)
         
     
     def SHA(self):

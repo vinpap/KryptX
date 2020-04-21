@@ -16,8 +16,10 @@ class BlowfishBlueprint(BaseBlueprint):
         fh.setFormatter(logging.Formatter(fmt='%(asctime)s - %(levelname)s - %(name)s - %(message)s'))
         self.logger.addHandler(fh)
         
+        self.__url = "/blowfish"
+        
         super().__init__('Blowfish', 'MODERN')
-        self.add_url_rule("/blowfish", "blowfish", self.blowfish)
+        self.add_url_rule(self.__url, "blowfish", self.blowfish)
         
     
     def blowfish(self):

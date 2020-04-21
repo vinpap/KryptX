@@ -16,8 +16,10 @@ class DESBlueprint(BaseBlueprint):
         fh.setFormatter(logging.Formatter(fmt='%(asctime)s - %(levelname)s - %(name)s - %(message)s'))
         self.logger.addHandler(fh)
         
+        self.__url = "/des"
+        
         super().__init__('DES', 'OUTDATED')
-        self.add_url_rule("/des", "des", self.DES)
+        self.add_url_rule(self.__url, "des", self.DES)
         
     
     def DES(self):

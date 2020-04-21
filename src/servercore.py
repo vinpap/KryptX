@@ -29,12 +29,8 @@ class ServerCore:
         
         self.app = Flask(__name__)
         self.app.add_url_rule("/", "index", self.index)
-        
-        self.allAlgos = []
-        self.historicalAlgos = []
-        self.outdatedAlgos = []
-        self.modernAlgos = []
-        self.hashingAlgos = []
+    
+
         
         self.loadBlueprints()
     
@@ -43,58 +39,87 @@ class ServerCore:
         """Each encryption method has its own blueprint. All the different
         blueprints must be loaded here"""
         
+        allAlgos = {}
+        historicalAlgos = {}
+        outdatedAlgos = {}
+        modernAlgos = {}
+        hashingAlgos = {}
+        
         self.aes = AESBlueprint()
         self.app.register_blueprint(self.aes)
-        self.modernAlgos.append(self.aes.blueprintName)
+        modernAlgos[self.aes.blueprintName] = self.aes.url
         self.logger.debug("Blueprint added: " + self.aes.blueprintName + ". Algorithm type: " + self.aes.algoType)
         
         self.blowfish = BlowfishBlueprint()
         self.app.register_blueprint(self.blowfish)
-        self.modernAlgos.append(self.blowfish.blueprintName)
+        modernAlgos[self.blowfish.blueprintName] = self.blowfish.url
         self.logger.debug("Blueprint added: " + self.blowfish.blueprintName + ". Algorithm type: " + self.blowfish.algoType)
         
         self.caesarCipher = CaesarCipherBlueprint()
         self.app.register_blueprint(self.caesarCipher)
-        self.historicalAlgos.append(self.caesarCipher.blueprintName)
+        historicalAlgos[self.caesarCipher.blueprintName] = self.caesarCipher.url
         self.logger.debug("Blueprint added: " + self.caesarCipher.blueprintName + ". Algorithm type: " + self.caesarCipher.algoType)
         
         self.des = DESBlueprint()
         self.app.register_blueprint(self.des)
-        self.outdatedAlgos.append(self.des.blueprintName)
+        outdatedAlgos[self.des.blueprintName] = self.des.url
         self.logger.debug("Blueprint added: " + self.des.blueprintName + ". Algorithm type: " + self.des.algoType)
         
         self.enigmaM3 = EnigmaM3Blueprint()
         self.app.register_blueprint(self.enigmaM3)
-        self.historicalAlgos.append(self.enigmaM3.blueprintName)
+        historicalAlgos[self.enigmaM3.blueprintName] = self.enigmaM3.url
         self.logger.debug("Blueprint added: " + self.enigmaM3.blueprintName + ". Algorithm type: " + self.enigmaM3.algoType)
         
         self.md5 = MD5Blueprint()
         self.app.register_blueprint(self.md5)
-        self.hashingAlgos.append(self.md5.blueprintName)
+        hashingAlgos[self.md5.blueprintName] = self.md5.url
         self.logger.debug("Blueprint added: " + self.md5.blueprintName + ". Algorithm type: " + self.md5.algoType)
         
         self.rsa = RSABlueprint()
         self.app.register_blueprint(self.rsa)
-        self.modernAlgos.append(self.rsa.blueprintName)
+        modernAlgos[self.rsa.blueprintName] = self.rsa.url
         self.logger.debug("Blueprint added: " + self.rsa.blueprintName + ". Algorithm type: " + self.rsa.algoType)
         
         self.sha = SHABlueprint()
         self.app.register_blueprint(self.sha)
-        self.hashingAlgos.append(self.sha.blueprintName)
+        hashingAlgos[self.sha.blueprintName] = self.sha.url
         self.logger.debug("Blueprint added: " + self.sha.blueprintName + ". Algorithm type: " + self.sha.algoType)
         
         self.vigenereCipher = VigenereCipherBlueprint()   
         self.app.register_blueprint(self.vigenereCipher)
-        self.historicalAlgos.append(self.vigenereCipher.blueprintName)
+        historicalAlgos[self.vigenereCipher.blueprintName] = self.vigenereCipher.url
         self.logger.debug("Blueprint added: " + self.vigenereCipher.blueprintName + ". Algorithm type: " + self.vigenereCipher.algoType)
         
         
-        self.allAlgos = self.historicalAlgos + self.outdatedAlgos + self.modernAlgos + self.hashingAlgos
-        self.allAlgos.sort()
-        self.historicalAlgos.sort()
-        self.outdatedAlgos.sort()
-        self.modernAlgos.sort()
-        self.hashingAlgos.sort()
+        allAlgos.update(historicalAlgos)
+        allAlgos.update(outdatedAlgos)
+        allAlgos.update(modernAlgos)
+        allAlgos.update(hashingAlgos)
+        
+        
+        allAlgosList = list(allAlgos.keys())
+        allAlgosList.sort()
+        historicalAlgosList = list(historicalAlgos.keys())
+        historicalAlgosList.sort()
+        outdatedAlgosList = list(outdatedAlgos.keys())
+        outdatedAlgosList.sort()
+        modernAlgosList = list(modernAlgos.keys())
+        modernAlgosList.sort()
+        hashingAlgosList = list(hashingAlgos.keys())
+        hashingAlgosList.sort()
+        
+        
+        self.allAlgosSorted = []
+        self.historicalAlgosSorted = []
+        self.outdatedAlgosSorted = []
+        self.modernAlgosSorted = []
+        self.hashingAlgosSorted = []
+        
+        for i in allAlgosList: self.allAlgosSorted.append((i, allAlgos[i]))
+        for i in historicalAlgosList: self.historicalAlgosSorted.append((i, historicalAlgos[i]))
+        for i in outdatedAlgosList: self.outdatedAlgosSorted.append((i, outdatedAlgos[i]))
+        for i in modernAlgosList: self.modernAlgosSorted.append((i, modernAlgos[i]))
+        for i in hashingAlgosList: self.hashingAlgosSorted.append((i, hashingAlgos[i]))
         
         
     def launchServer(self):
@@ -110,11 +135,11 @@ class ServerCore:
         
         try:
             
-            return render_template("index.html", allAlgos=self.allAlgos, 
-                                   historicalAlgos=self.historicalAlgos, 
-                                   outdatedAlgos=self.outdatedAlgos,
-                                   modernAlgos=self.modernAlgos,
-                                   hashingAlgos=self.hashingAlgos)
+            return render_template("index.html", allAlgos=self.allAlgosSorted, 
+                                   historicalAlgos=self.historicalAlgosSorted, 
+                                   outdatedAlgos=self.outdatedAlgosSorted,
+                                   modernAlgos=self.modernAlgosSorted,
+                                   hashingAlgos=self.hashingAlgosSorted)
         
         except TemplateNotFound:
             

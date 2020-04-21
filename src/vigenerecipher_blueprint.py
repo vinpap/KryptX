@@ -16,8 +16,10 @@ class VigenereCipherBlueprint(BaseBlueprint):
         fh.setFormatter(logging.Formatter(fmt='%(asctime)s - %(levelname)s - %(name)s - %(message)s'))
         self.logger.addHandler(fh)
         
+        self.__url = "/vigenerecipher"
+        
         super().__init__('Vigenère Cipher', 'HISTORICAL')
-        self.add_url_rule("/vigenerecipher", "vigenerecipher", self.vigenereCipher)
+        self.add_url_rule(self.__url, "vigenerecipher", self.vigenereCipher)
         
     def vigenereCipher(self):
         

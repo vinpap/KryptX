@@ -16,8 +16,10 @@ class AESBlueprint(BaseBlueprint):
         fh.setFormatter(logging.Formatter(fmt='%(asctime)s - %(levelname)s - %(name)s - %(message)s'))
         self.logger.addHandler(fh)
         
+        self.__url = "/aes"
+        
         super().__init__('AES', 'MODERN')
-        self.add_url_rule("/aes", "aes", self.AES)
+        self.add_url_rule(self.__url, "aes", self.AES)
         
     
     def AES(self):

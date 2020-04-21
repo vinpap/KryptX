@@ -16,8 +16,10 @@ class RSABlueprint(BaseBlueprint):
         fh.setFormatter(logging.Formatter(fmt='%(asctime)s - %(levelname)s - %(name)s - %(message)s'))
         self.logger.addHandler(fh)
         
+        self.__url = "/rsa"
+        
         super().__init__('RSA', 'MODERN')
-        self.add_url_rule("/rsa", "rsa", self.RSA)
+        self.add_url_rule(self.__url, "rsa", self.RSA)
         
     
     def RSA(self):

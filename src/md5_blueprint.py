@@ -16,8 +16,10 @@ class MD5Blueprint(BaseBlueprint):
         fh.setFormatter(logging.Formatter(fmt='%(asctime)s - %(levelname)s - %(name)s - %(message)s'))
         self.logger.addHandler(fh)
         
+        self.__url = "/md5"
+        
         super().__init__('MD5', 'HASHING')
-        self.add_url_rule("/md5", "md5", self.MD5)
+        self.add_url_rule(self.__url, "md5", self.MD5)
         
     
     def MD5(self):
