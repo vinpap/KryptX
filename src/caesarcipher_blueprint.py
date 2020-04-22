@@ -16,10 +16,10 @@ class CaesarCipherBlueprint(BaseBlueprint):
         fh.setFormatter(logging.Formatter(fmt='%(asctime)s - %(levelname)s - %(name)s - %(message)s'))
         self.logger.addHandler(fh)
         
-        self.__url = "/caesarcipher"
+        url = "/caesarcipher"
+        super().__init__('Caesar Cipher', 'HISTORICAL', url)
         
-        super().__init__('Caesar Cipher', 'HISTORICAL')
-        self.add_url_rule(self.__url, "caesarcipher", self.caesarCipher)
+        self.add_url_rule(url, "caesarcipher", self.caesarCipher)
         
     
     def caesarCipher(self):
@@ -28,7 +28,11 @@ class CaesarCipherBlueprint(BaseBlueprint):
         
         try:
             
-            return render_template("index.html")
+            return render_template("index.html", allAlgos=self._allAlgosSorted, 
+                                   historicalAlgos=self._historicalAlgosSorted, 
+                                   outdatedAlgos=self._outdatedAlgosSorted,
+                                   modernAlgos=self._modernAlgosSorted,
+                                   hashingAlgos=self._hashingAlgosSorted)
         
         except TemplateNotFound:
             

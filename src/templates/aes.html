@@ -2,8 +2,9 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>KryptX</title>
+        <title>KryptX - AES</title>
         <link rel="stylesheet" href="{{ url_for('static',filename='styles/base_style.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static',filename='styles/aes.css') }}" />
         <link rel='icon' href="{{ url_for('static',filename='files/favicon.ico') }}" type='image/x-icon'/ >
     </head>
     <body>
@@ -62,19 +63,16 @@
                 </div>
             </div>
         </nav>
-        <div class="homepage_main_zone">
-            
-            <div>
-                <h1>Welcome to KryptX!</h1>
+        <div class="central_zone">
+            <div class="encryption_zone">
+                <p>
+                    ZONE DE CRYPTAGE/DÉCRYPTAGE
+                </p>
             </div>
-            <button type="button" class="encryption_selection_button">Choose an encryption method</button>
-            <div class="warning_message">
-                <img src="{{ url_for('static',filename='files/warning.png') }}" alt="warning"/>
-                <span>This app is offered for educational purposes only. It should NEVER be used as a reliable way to encrypt or hash your data. In no event shall the creator of this application be liable for any data loss or theft arising from the use of this app</span>
+            <div class="description">
+                <p>Description de la méthode de cryptage (histoire, principe de base). Possibilité de scroller</p>
             </div>
-            
-            
-            
+   
         </div>
     </body>
     <footer>

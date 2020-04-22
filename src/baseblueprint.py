@@ -5,7 +5,7 @@ from flask import Blueprint
 
 class BaseBlueprint(Blueprint):
     
-    def __init__(self, blueprintName, algoType):
+    def __init__(self, blueprintName, algoType, url):
         
         self.logger = logging.getLogger(__name__)
         fh = logging.handlers.RotatingFileHandler('logs/' + __name__ + '.log', 
@@ -14,15 +14,28 @@ class BaseBlueprint(Blueprint):
         self.logger.addHandler(fh)
         
         super().__init__(blueprintName, __name__)
-        self.__blueprintName = blueprintName
-        self.__algoType = algoType
-        self.__url = ""
+        self._blueprintName = blueprintName
+        self._algoType = algoType
+        self._url = url
         
+        self._allAlgosSorted = []
+        self._historicalAlgosSorted = []
+        self._outdatedAlgosSorted = []
+        self._modernAlgosSorted = []
+        self._hashingAlgosSorted = []
+    
+    def setAlgosList(self, algosList):
+        
+        self._allAlgosSorted = algosList[0]
+        self._historicalAlgosSorted = algosList[1]
+        self._outdatedAlgosSorted = algosList[2]
+        self._modernAlgosSorted = algosList[3]
+        self._hashingAlgosSorted = algosList[4]
         
     @property
     def blueprintName(self):
 
-        return self.__blueprintName
+        return self._blueprintName
 
     @blueprintName.setter
     def blueprintName(self, newName) :
@@ -33,7 +46,7 @@ class BaseBlueprint(Blueprint):
     @property
     def algoType(self):
 
-        return self.__algoType
+        return self._algoType
 
     @algoType.setter
     def algoType(self, newAlgoType) :
@@ -44,10 +57,59 @@ class BaseBlueprint(Blueprint):
     @property
     def url(self):
 
-        return self.__url
+        return self._url
 
     @url.setter
     def url(self, newURL) :
 
         self.logger.error("Error during the modification of blueprint object " + self.__blueprintName + " : blueprint URL cannot be changed from outside the blueprint class")
+    
+    @property
+    def allAlgosSorted(self):
         
+        return self._allAlgosSorted
+    
+    @allAlgosSorted.setter
+    def allAlgosSorted(self):
+        
+        self.logger.error("Error during the modification of blueprint object " + self.__blueprintName + " : the algorithms list cannot be changed from outside the blueprint class")
+        
+    @property
+    def historicalAlgosSorted(self):
+        
+        return self._historicalAlgosSorted
+    
+    @historicalAlgosSorted.setter
+    def historicalAlgosSorted(self):
+        
+        self.logger.error("Error during the modification of blueprint object " + self.__blueprintName + " : the algorithms list cannot be changed from outside the blueprint class")
+        
+    @property
+    def outdatedAlgosSorted(self):
+        
+        return self._outdatedAlgosSorted
+    
+    @outdatedAlgosSorted.setter
+    def outdatedAlgosSorted(self):
+        
+        self.logger.error("Error during the modification of blueprint object " + self.__blueprintName + " : the algorithms list cannot be changed from outside the blueprint class")
+        
+    @property
+    def modernAlgosSorted(self):
+        
+        return self._modernAlgosSorted
+    
+    @modernAlgosSorted.setter
+    def modernAlgosSorted(self):
+        
+        self.logger.error("Error during the modification of blueprint object " + self.__blueprintName + " : the algorithms list cannot be changed from outside the blueprint class")
+        
+    @property
+    def hashingAlgosSorted(self):
+        
+        return self._hashingAlgosSorted
+    
+    @hashingAlgosSorted.setter
+    def hashingAlgosSorted(self):
+        
+        self.logger.error("Error during the modification of blueprint object " + self.__blueprintName + " : the algorithms list cannot be changed from outside the blueprint class")

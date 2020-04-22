@@ -16,10 +16,10 @@ class DESBlueprint(BaseBlueprint):
         fh.setFormatter(logging.Formatter(fmt='%(asctime)s - %(levelname)s - %(name)s - %(message)s'))
         self.logger.addHandler(fh)
         
-        self.__url = "/des"
+        url = "/des"
+        super().__init__('DES', 'OUTDATED', url)
         
-        super().__init__('DES', 'OUTDATED')
-        self.add_url_rule(self.__url, "des", self.DES)
+        self.add_url_rule(url, "des", self.DES)
         
     
     def DES(self):
@@ -28,8 +28,11 @@ class DESBlueprint(BaseBlueprint):
         
         try:
             
-            return render_template("index.html")
-        
+            return render_template("index.html", allAlgos=self._allAlgosSorted, 
+                                   historicalAlgos=self._historicalAlgosSorted, 
+                                   outdatedAlgos=self._outdatedAlgosSorted,
+                                   modernAlgos=self._modernAlgosSorted,
+                                   hashingAlgos=self._hashingAlgosSorted)        
         except TemplateNotFound:
             
             abort(404)

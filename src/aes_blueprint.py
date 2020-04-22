@@ -16,10 +16,10 @@ class AESBlueprint(BaseBlueprint):
         fh.setFormatter(logging.Formatter(fmt='%(asctime)s - %(levelname)s - %(name)s - %(message)s'))
         self.logger.addHandler(fh)
         
-        self.__url = "/aes"
+        url = "/aes"
+        super().__init__('AES', 'MODERN', url)
         
-        super().__init__('AES', 'MODERN')
-        self.add_url_rule(self.__url, "aes", self.AES)
+        self.add_url_rule(url, "aes", self.AES)
         
     
     def AES(self):
@@ -28,7 +28,11 @@ class AESBlueprint(BaseBlueprint):
         
         try:
             
-            return render_template("index.html")
+            return render_template("aes.html", allAlgos=self._allAlgosSorted, 
+                                   historicalAlgos=self._historicalAlgosSorted, 
+                                   outdatedAlgos=self._outdatedAlgosSorted,
+                                   modernAlgos=self._modernAlgosSorted,
+                                   hashingAlgos=self._hashingAlgosSorted)
         
         except TemplateNotFound:
             

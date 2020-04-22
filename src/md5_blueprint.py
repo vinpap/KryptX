@@ -16,10 +16,10 @@ class MD5Blueprint(BaseBlueprint):
         fh.setFormatter(logging.Formatter(fmt='%(asctime)s - %(levelname)s - %(name)s - %(message)s'))
         self.logger.addHandler(fh)
         
-        self.__url = "/md5"
+        url = "/md5"
+        super().__init__('MD5', 'HASHING', url)
         
-        super().__init__('MD5', 'HASHING')
-        self.add_url_rule(self.__url, "md5", self.MD5)
+        self.add_url_rule(url, "md5", self.MD5)
         
     
     def MD5(self):
@@ -28,7 +28,11 @@ class MD5Blueprint(BaseBlueprint):
         
         try:
             
-            return render_template("index.html")
+            return render_template("index.html", allAlgos=self._allAlgosSorted, 
+                                   historicalAlgos=self._historicalAlgosSorted, 
+                                   outdatedAlgos=self._outdatedAlgosSorted,
+                                   modernAlgos=self._modernAlgosSorted,
+                                   hashingAlgos=self._hashingAlgosSorted)
         
         except TemplateNotFound:
             

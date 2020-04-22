@@ -1,0 +1,18 @@
+.central_zone
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: space-around;
+    padding: 20px;
+}
+.encryption_zone
+{
+    
+}
+.description
+{
+    border: 1px black solid;
+    padding: 5px;
+}

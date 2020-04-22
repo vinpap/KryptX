@@ -16,10 +16,10 @@ class RSABlueprint(BaseBlueprint):
         fh.setFormatter(logging.Formatter(fmt='%(asctime)s - %(levelname)s - %(name)s - %(message)s'))
         self.logger.addHandler(fh)
         
-        self.__url = "/rsa"
+        url = "/rsa"
+        super().__init__('RSA', 'MODERN', url)
         
-        super().__init__('RSA', 'MODERN')
-        self.add_url_rule(self.__url, "rsa", self.RSA)
+        self.add_url_rule(url, "rsa", self.RSA)
         
     
     def RSA(self):
@@ -28,7 +28,11 @@ class RSABlueprint(BaseBlueprint):
         
         try:
             
-            return render_template("index.html")
+            return render_template("index.html", allAlgos=self._allAlgosSorted, 
+                                   historicalAlgos=self._historicalAlgosSorted, 
+                                   outdatedAlgos=self._outdatedAlgosSorted,
+                                   modernAlgos=self._modernAlgosSorted,
+                                   hashingAlgos=self._hashingAlgosSorted)
         
         except TemplateNotFound:
             

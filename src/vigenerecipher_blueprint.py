@@ -16,10 +16,10 @@ class VigenereCipherBlueprint(BaseBlueprint):
         fh.setFormatter(logging.Formatter(fmt='%(asctime)s - %(levelname)s - %(name)s - %(message)s'))
         self.logger.addHandler(fh)
         
-        self.__url = "/vigenerecipher"
+        url = "/vigenerecipher"
+        super().__init__('Vigenère Cipher', 'HISTORICAL', url)
         
-        super().__init__('Vigenère Cipher', 'HISTORICAL')
-        self.add_url_rule(self.__url, "vigenerecipher", self.vigenereCipher)
+        self.add_url_rule(url, "vigenerecipher", self.vigenereCipher)
         
     def vigenereCipher(self):
         
@@ -27,7 +27,11 @@ class VigenereCipherBlueprint(BaseBlueprint):
         
         try:
             
-            return render_template("index.html")
+            return render_template("index.html", allAlgos=self._allAlgosSorted, 
+                                   historicalAlgos=self._historicalAlgosSorted, 
+                                   outdatedAlgos=self._outdatedAlgosSorted,
+                                   modernAlgos=self._modernAlgosSorted,
+                                   hashingAlgos=self._hashingAlgosSorted)
         
         except TemplateNotFound:
             

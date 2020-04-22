@@ -121,6 +121,60 @@ class ServerCore:
         for i in modernAlgosList: self.modernAlgosSorted.append((i, modernAlgos[i]))
         for i in hashingAlgosList: self.hashingAlgosSorted.append((i, hashingAlgos[i]))
         
+        self.aes.setAlgosList([self.allAlgosSorted, 
+                               self.historicalAlgosSorted, 
+                               self.outdatedAlgosSorted, 
+                               self.modernAlgosSorted,
+                               self.hashingAlgosSorted])
+        
+        self.blowfish.setAlgosList([self.allAlgosSorted, 
+                               self.historicalAlgosSorted, 
+                               self.outdatedAlgosSorted, 
+                               self.modernAlgosSorted,
+                               self.hashingAlgosSorted])
+        
+        self.caesarCipher.setAlgosList([self.allAlgosSorted, 
+                               self.historicalAlgosSorted, 
+                               self.outdatedAlgosSorted, 
+                               self.modernAlgosSorted,
+                               self.hashingAlgosSorted])
+    
+        self.des.setAlgosList([self.allAlgosSorted, 
+                               self.historicalAlgosSorted, 
+                               self.outdatedAlgosSorted, 
+                               self.modernAlgosSorted,
+                               self.hashingAlgosSorted])
+    
+        self.enigmaM3.setAlgosList([self.allAlgosSorted, 
+                               self.historicalAlgosSorted, 
+                               self.outdatedAlgosSorted, 
+                               self.modernAlgosSorted,
+                               self.hashingAlgosSorted])
+    
+        self.md5.setAlgosList([self.allAlgosSorted, 
+                               self.historicalAlgosSorted, 
+                               self.outdatedAlgosSorted, 
+                               self.modernAlgosSorted,
+                               self.hashingAlgosSorted])
+    
+        self.rsa.setAlgosList([self.allAlgosSorted, 
+                               self.historicalAlgosSorted, 
+                               self.outdatedAlgosSorted, 
+                               self.modernAlgosSorted,
+                               self.hashingAlgosSorted])
+    
+        self.sha.setAlgosList([self.allAlgosSorted, 
+                               self.historicalAlgosSorted, 
+                               self.outdatedAlgosSorted, 
+                               self.modernAlgosSorted,
+                               self.hashingAlgosSorted])
+    
+        self.vigenereCipher.setAlgosList([self.allAlgosSorted, 
+                               self.historicalAlgosSorted, 
+                               self.outdatedAlgosSorted, 
+                               self.modernAlgosSorted,
+                               self.hashingAlgosSorted])
+        
         
     def launchServer(self):
         
