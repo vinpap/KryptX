@@ -37,6 +37,14 @@ class AESBlueprint(BaseBlueprint):
         except TemplateNotFound:
             
             abort(404)
+
+    def encrypt(self, message, key):
+        
+        return
+    
+    def decrypt(self, message, key):
+        
+        return
     
 
         
