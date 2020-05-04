@@ -37,12 +37,12 @@ class AdvancedEncryptionStandard(EncryptionInterface):
         encryptedMessage = encryptor.encrypt(message)
 
 
-        return encryptedMessage
+        return encryptedMessage.hex()
 
     def decrypt(self, message, key=0):
 
 
-        if not isinstance(message, bytes):
+        if not isinstance(message, str):
 
             self.logger.error("Error during the decryption of a message with DES. The message must be a string")
             return False
@@ -53,6 +53,7 @@ class AdvancedEncryptionStandard(EncryptionInterface):
             return False
 
         userKey = bytes(key, encoding='utf-8')
+        message = bytes.fromhex(message)
 
         ctr = Counter.new(128)
         decryptor = AES.new(userKey, AES.MODE_CTR, counter=ctr)

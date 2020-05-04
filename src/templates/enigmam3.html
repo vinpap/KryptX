@@ -2,11 +2,11 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>KryptX - AES</title>
+        <title>KryptX - Enigma M3</title>
         <link rel="stylesheet" href="{{ url_for('static',filename='styles/base_style.css') }}" />
-        <link rel="stylesheet" href="{{ url_for('static',filename='styles/aes.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static',filename='styles/enigmam3.css') }}" />
         <link rel='icon' href="{{ url_for('static',filename='files/favicon.ico') }}" type='image/x-icon'/ >
-        <script src="{{ url_for('static',filename='js/aes.js') }}"></script>
+        <script src="{{ url_for('static',filename='js/enigmam3.js') }}"></script>
     </head>
     <body>
         <nav class="navigation_bar">
@@ -82,18 +82,101 @@
                 </div>
                 {% endif %}
                 <div id="encryption_form">
-                    <form method="post" action="/aes/encryption">
+                    <form method="post" action="/enigmam3/encryption">
                         <p>
                             <label for="clear_message_area">Enter the message you want to encrypt here: </label><br/>
                             <textarea class="centered_form_content" name="message" id="clear_message_area" rows="10" cols="50" required></textarea><br/><br/>
-                            <label for="encryption_key_area">Enter your key here: </label><br/>
-                            <textarea class="centered_form_content" name="key_area" id="encryption_key_area" cols="50" required></textarea><br/><br/>
+                            <label for="first_rotot_start">Start position for the first rotor</label><br />
+                            <select name="first_rotor_start" id="first_rotor_start">
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="E">E</option>
+                                <option value="F">F</option>
+                                <option value="G">G</option>
+                                <option value="H">H</option>
+                                <option value="I">I</option>
+                                <option value="J">J</option>
+                                <option value="K">K</option>
+                                <option value="L">L</option>
+                                <option value="M">M</option>
+                                <option value="N">N</option>
+                                <option value="O">O</option>
+                                <option value="P">P</option>
+                                <option value="Q">Q</option>
+                                <option value="R">R</option>
+                                <option value="S">S</option>
+                                <option value="T">T</option>
+                                <option value="U">U</option>
+                                <option value="V">V</option>
+                                <option value="W">W</option>
+                                <option value="X">X</option>
+                                <option value="Y">Y</option>
+                                <option value="Z">Z</option>
+                            </select>
+                            <select name="second_rotor_start" id="second_rotor_start">
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="E">E</option>
+                                <option value="F">F</option>
+                                <option value="G">G</option>
+                                <option value="H">H</option>
+                                <option value="I">I</option>
+                                <option value="J">J</option>
+                                <option value="K">K</option>
+                                <option value="L">L</option>
+                                <option value="M">M</option>
+                                <option value="N">N</option>
+                                <option value="O">O</option>
+                                <option value="P">P</option>
+                                <option value="Q">Q</option>
+                                <option value="R">R</option>
+                                <option value="S">S</option>
+                                <option value="T">T</option>
+                                <option value="U">U</option>
+                                <option value="V">V</option>
+                                <option value="W">W</option>
+                                <option value="X">X</option>
+                                <option value="Y">Y</option>
+                                <option value="Z">Z</option>
+                            </select>
+                            <select name="third_rotor_start" id="third_rotor_start">
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="E">E</option>
+                                <option value="F">F</option>
+                                <option value="G">G</option>
+                                <option value="H">H</option>
+                                <option value="I">I</option>
+                                <option value="J">J</option>
+                                <option value="K">K</option>
+                                <option value="L">L</option>
+                                <option value="M">M</option>
+                                <option value="N">N</option>
+                                <option value="O">O</option>
+                                <option value="P">P</option>
+                                <option value="Q">Q</option>
+                                <option value="R">R</option>
+                                <option value="S">S</option>
+                                <option value="T">T</option>
+                                <option value="U">U</option>
+                                <option value="V">V</option>
+                                <option value="W">W</option>
+                                <option value="X">X</option>
+                                <option value="Y">Y</option>
+                                <option value="Z">Z</option>
+                            </select>
                             <input class="centered_form_button" type="submit" value="Encrypt" />
                         </p>
                     </form>
                 </div>
                 <div id="decryption_form">
-                    <form method="post" action="/aes/decryption">
+                    <form method="post" action="/enigmam3/decryption">
                         <p>
                             <label for="encrypted_message_area">Enter the message you want to decrypt here: </label><br/>
                             <textarea class="centered_form_content" name="message" id="encrypted_message_area" rows="10" cols="50" required></textarea><br/><br/>

@@ -2,11 +2,11 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>KryptX - AES</title>
+        <title>KryptX - Caesar Cipher</title>
         <link rel="stylesheet" href="{{ url_for('static',filename='styles/base_style.css') }}" />
-        <link rel="stylesheet" href="{{ url_for('static',filename='styles/aes.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static',filename='styles/caesarcipher.css') }}" />
         <link rel='icon' href="{{ url_for('static',filename='files/favicon.ico') }}" type='image/x-icon'/ >
-        <script src="{{ url_for('static',filename='js/aes.js') }}"></script>
+        <script src="{{ url_for('static',filename='js/caesarcipher.js') }}"></script>
     </head>
     <body>
         <nav class="navigation_bar">
@@ -82,7 +82,7 @@
                 </div>
                 {% endif %}
                 <div id="encryption_form">
-                    <form method="post" action="/aes/encryption">
+                    <form method="post" action="/caesarcipher/encryption">
                         <p>
                             <label for="clear_message_area">Enter the message you want to encrypt here: </label><br/>
                             <textarea class="centered_form_content" name="message" id="clear_message_area" rows="10" cols="50" required></textarea><br/><br/>
@@ -93,7 +93,7 @@
                     </form>
                 </div>
                 <div id="decryption_form">
-                    <form method="post" action="/aes/decryption">
+                    <form method="post" action="/caesarcipher/decryption">
                         <p>
                             <label for="encrypted_message_area">Enter the message you want to decrypt here: </label><br/>
                             <textarea class="centered_form_content" name="message" id="encrypted_message_area" rows="10" cols="50" required></textarea><br/><br/>

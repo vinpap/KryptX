@@ -1,10 +1,11 @@
 import logging
 import logging.handlers
 
-from flask import render_template, abort
+from flask import render_template, abort, request
 from jinja2 import TemplateNotFound
 
 from baseblueprint import BaseBlueprint
+from des_algo import DES
 
 class DESBlueprint(BaseBlueprint):
     
@@ -16,10 +17,14 @@ class DESBlueprint(BaseBlueprint):
         fh.setFormatter(logging.Formatter(fmt='%(asctime)s - %(levelname)s - %(name)s - %(message)s'))
         self.logger.addHandler(fh)
         
+        self.algo = DES()
+        
         url = "/des"
         super().__init__('DES', 'OUTDATED', url)
         
         self.add_url_rule(url, "des", self.DES)
+        self.add_url_rule(url + "/encryption", "des_encryption", self.displayEncryptedText, methods=["POST"])
+        self.add_url_rule(url + "/decryption", "des_decryption", self.displayDecryptedText, methods=["POST"])
         
     
     def DES(self):
@@ -28,7 +33,9 @@ class DESBlueprint(BaseBlueprint):
         
         try:
             
-            return render_template("index.html", allAlgos=self._allAlgosSorted, 
+            return render_template("des.html", 
+                                   mode="homepage",
+                                   allAlgos=self._allAlgosSorted, 
                                    historicalAlgos=self._historicalAlgosSorted, 
                                    outdatedAlgos=self._outdatedAlgosSorted,
                                    modernAlgos=self._modernAlgosSorted,
@@ -38,4 +45,90 @@ class DESBlueprint(BaseBlueprint):
             abort(404)
     
 
+    def displayEncryptedText(self):
         
+        message = request.form["message"]
+        key = request.form["key_area"]
+        
+        
+        
+        if len(bytes(key, encoding='utf-8')) not in range(8, 16, 24):
+            
+            errorMsg = ("This key is not valid. Please enter a key of 64, "
+                        "128 or 192 bits. This amounts to 8, 16 or 24 "
+                        "characters in ASCII")
+            try:
+
+                return render_template("des.html",
+                                   mode="encryptionError",
+                                   error=errorMsg,
+                                   allAlgos=self._allAlgosSorted, 
+                                   historicalAlgos=self._historicalAlgosSorted, 
+                                   outdatedAlgos=self._outdatedAlgosSorted,
+                                   modernAlgos=self._modernAlgosSorted,
+                                   hashingAlgos=self._hashingAlgosSorted)
+        
+            except TemplateNotFound:
+            
+                abort(404)
+        
+        encryptedText = str(self.algo.encrypt(message, key))
+        
+        try:
+
+            return render_template("des.html",
+                                   mode="displayEncryptedText",
+                                   encryptedMessage=encryptedText,
+                                   allAlgos=self._allAlgosSorted, 
+                                   historicalAlgos=self._historicalAlgosSorted, 
+                                   outdatedAlgos=self._outdatedAlgosSorted,
+                                   modernAlgos=self._modernAlgosSorted,
+                                   hashingAlgos=self._hashingAlgosSorted)
+        
+        except TemplateNotFound:
+            
+            abort(404)
+        
+    
+    def displayDecryptedText(self):
+        
+        message = request.form["message"]
+        key = request.form["key_area"]
+        
+        if len(bytes(key, encoding='utf-8')) not in range(8, 16, 24):
+            
+            errorMsg = ("This key is not valid. Please enter a key of 64, "
+                        "128 or 192 bits. This amounts to 8, 16 or 24 "
+                        "characters in ASCII")
+            try:
+
+                return render_template("des.html",
+                                   mode="decryptionError",
+                                   error=errorMsg,
+                                   allAlgos=self._allAlgosSorted, 
+                                   historicalAlgos=self._historicalAlgosSorted, 
+                                   outdatedAlgos=self._outdatedAlgosSorted,
+                                   modernAlgos=self._modernAlgosSorted,
+                                   hashingAlgos=self._hashingAlgosSorted)
+        
+            except TemplateNotFound:
+            
+                abort(404)
+        
+        decryptedText = self.algo.decrypt(message, key)
+        
+        try:
+
+            return render_template("des.html", 
+                                   mode="displayDecryptedText",
+                                   decryptedMessage=decryptedText,
+                                   allAlgos=self._allAlgosSorted, 
+                                   historicalAlgos=self._historicalAlgosSorted, 
+                                   outdatedAlgos=self._outdatedAlgosSorted,
+                                   modernAlgos=self._modernAlgosSorted,
+                                   hashingAlgos=self._hashingAlgosSorted)
+        
+        except TemplateNotFound:
+            
+            abort(404)
+   

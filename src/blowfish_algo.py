@@ -41,20 +41,22 @@ class Blowfish(EncryptionInterface):
 
         encryptedMessage = b"".join(cipher.encrypt_ctr(bytes(message, encoding="utf-8"), encryptionCounter))
 
-        return encryptedMessage
+        return encryptedMessage.hex()
 
     def decrypt(self, message, key=0):
 
 
-        if not isinstance(message, bytes):
+        if not isinstance(message, str):
 
-            self.logger.error("Error during the decryption of a message with Blowfish. The message must be a bytes object")
+            self.logger.error("Error during the decryption of a message with Blowfish. The message must be a string")
             return False
 
         if not isinstance(key, str) or len(bytes(key, encoding='utf-8')) < 4 or len(bytes(key, encoding='utf-8')) > 56:
 
             self.logger.error("Error during the decryption of a message with Blowfish. The key must be between 4 and 56 bytes long")
             return False
+        
+        message = bytes.fromhex(message)
 
         cipher = blowfish.Cipher(bytes(key, encoding='utf-8'))
 
@@ -63,5 +65,5 @@ class Blowfish(EncryptionInterface):
         decryptedMessage = b"".join(cipher.decrypt_ctr(message, decryptionCounter))
 
 
-        return decryptedMessage.decode("utf-8")
+        return decryptedMessage.decode('utf-8')
     

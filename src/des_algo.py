@@ -39,21 +39,23 @@ class DES(EncryptionInterface):
         encryptedMessage = userKey.encrypt(bytes(message, encoding='utf-8'), padding=True)
         print(encryptedMessage)
 
-        return encryptedMessage
+        return encryptedMessage.hex()
 
     def decrypt(self, message, key=0):
 
         """The key parameter must be an ASCII string of length 8, 16 or 24"""
 
-        if not isinstance(message, bytes):
+        if not isinstance(message, str):
 
-            self.logger.error("Error during the decryption of a message with DES. The message must be a bytes object")
+            self.logger.error("Error during the decryption of a message with DES. The message must be a string")
             return False
 
         if not isinstance(key, str) or len(bytes(key, encoding='utf-8')) not in (8, 16, 24):
 
             self.logger.error("Error during the decryption of a message with DES. The key must be an string in ASCII format of length 8, 16 or 24")
             return False
+        
+        message = bytes.fromhex(message)
 
         userKey = DesKey(bytes(key, encoding='utf-8'))
 

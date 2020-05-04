@@ -1,10 +1,11 @@
 import logging
 import logging.handlers
 
-from flask import render_template, abort
+from flask import render_template, abort, request
 from jinja2 import TemplateNotFound
 
 from baseblueprint import BaseBlueprint
+from caesarcipher_algo import CaesarCipher
 
 class CaesarCipherBlueprint(BaseBlueprint):
     
@@ -16,10 +17,14 @@ class CaesarCipherBlueprint(BaseBlueprint):
         fh.setFormatter(logging.Formatter(fmt='%(asctime)s - %(levelname)s - %(name)s - %(message)s'))
         self.logger.addHandler(fh)
         
+        self.algo = CaesarCipher()
+        
         url = "/caesarcipher"
         super().__init__('Caesar Cipher', 'HISTORICAL', url)
         
         self.add_url_rule(url, "caesarcipher", self.caesarCipher)
+        self.add_url_rule(url + "/encryption", "caesar_cipher_encryption", self.displayEncryptedText, methods=["POST"])
+        self.add_url_rule(url + "/decryption", "caesar_cipher_decryption", self.displayDecryptedText, methods=["POST"])
         
     
     def caesarCipher(self):
@@ -28,7 +33,9 @@ class CaesarCipherBlueprint(BaseBlueprint):
         
         try:
             
-            return render_template("index.html", allAlgos=self._allAlgosSorted, 
+            return render_template("caesarcipher.html", 
+                                   mode="homepage",
+                                   allAlgos=self._allAlgosSorted, 
                                    historicalAlgos=self._historicalAlgosSorted, 
                                    outdatedAlgos=self._outdatedAlgosSorted,
                                    modernAlgos=self._modernAlgosSorted,
@@ -39,4 +46,101 @@ class CaesarCipherBlueprint(BaseBlueprint):
             abort(404)
     
 
+    def displayEncryptedText(self):
         
+        message = request.form["message"]
+        key = request.form["key_area"]
+        
+        
+        
+        try:
+            
+            key = int(key)
+            
+        except ValueError:
+            
+            errorMsg = ("This key is not valid. The key must be an integer")
+            
+            try:
+
+                return render_template("caesarcipher.html",
+                                   mode="encryptionError",
+                                   error=errorMsg,
+                                   allAlgos=self._allAlgosSorted, 
+                                   historicalAlgos=self._historicalAlgosSorted, 
+                                   outdatedAlgos=self._outdatedAlgosSorted,
+                                   modernAlgos=self._modernAlgosSorted,
+                                   hashingAlgos=self._hashingAlgosSorted)
+        
+            except TemplateNotFound:
+            
+                abort(404)
+        
+        encryptedText = str(self.algo.encrypt(message, key))
+        
+        try:
+
+            return render_template("caesarcipher.html",
+                                   mode="displayEncryptedText",
+                                   encryptedMessage=encryptedText,
+                                   allAlgos=self._allAlgosSorted, 
+                                   historicalAlgos=self._historicalAlgosSorted, 
+                                   outdatedAlgos=self._outdatedAlgosSorted,
+                                   modernAlgos=self._modernAlgosSorted,
+                                   hashingAlgos=self._hashingAlgosSorted)
+        
+        except TemplateNotFound:
+            
+            abort(404)
+        
+    
+    def displayDecryptedText(self):
+        
+        message = request.form["message"]
+        key = request.form["key_area"]
+        
+        try:
+            
+            key = int(key)
+            
+        except ValueError:
+            
+            errorMsg = ("This key is not valid. The key must be an integer")
+            
+            try:
+
+                return render_template("caesarcipher.html",
+                                   mode="decryptionError",
+                                   error=errorMsg,
+                                   allAlgos=self._allAlgosSorted, 
+                                   historicalAlgos=self._historicalAlgosSorted, 
+                                   outdatedAlgos=self._outdatedAlgosSorted,
+                                   modernAlgos=self._modernAlgosSorted,
+                                   hashingAlgos=self._hashingAlgosSorted)
+        
+            except TemplateNotFound:
+            
+                abort(404)
+        
+        decryptedText = self.algo.decrypt(message, key)
+        
+        try:
+
+            return render_template("caesarcipher.html", 
+                                   mode="displayDecryptedText",
+                                   decryptedMessage=decryptedText,
+                                   allAlgos=self._allAlgosSorted, 
+                                   historicalAlgos=self._historicalAlgosSorted, 
+                                   outdatedAlgos=self._outdatedAlgosSorted,
+                                   modernAlgos=self._modernAlgosSorted,
+                                   hashingAlgos=self._hashingAlgosSorted)
+        
+        except TemplateNotFound:
+            
+            abort(404)
+
+
+    
+    
+
+             

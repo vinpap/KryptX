@@ -33,20 +33,22 @@ class RSAAlgo(EncryptionInterface):
         encryptedMessage = publicKey.encrypt(bytes(message, encoding="utf-8"), b"random")
 
 
-        return encryptedMessage[0]
+        return encryptedMessage[0].hex()
 
     def decrypt(self, message, key=0):
 
 
-        if not isinstance(message, bytes):
+        if not isinstance(message, str):
 
-            self.logger.error("Error during the decryption of a message with RSA. The message must be a bytes object")
+            self.logger.error("Error during the decryption of a message with RSA. The message must be a string")
             return False
 
         if not isinstance(key, bytes):
 
             self.logger.error("Error during the decryption of a message with RSA. The key must be a bytes object")
             return False
+        
+        message = bytes.fromhex(message)
 
         privateKey = RSA.importKey(key)
         decryptedMessage = privateKey.decrypt(message)

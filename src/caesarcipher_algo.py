@@ -56,13 +56,13 @@ class CaesarCipher(EncryptionInterface):
 
                 encryptedMessage = encryptedMessage + i
 
-        return bytes(encryptedMessage, encoding="utf-8")
+        return encryptedMessage
 
     def decrypt(self, message, key=0):
 
-        if not isinstance(message, bytes):
+        if not isinstance(message, str):
 
-            self.logger.error("Error during the decryption of a message with the Caesar cipher. The message must be a bytes object")
+            self.logger.error("Error during the decryption of a message with the Caesar cipher. The message must be a string")
             return False
 
         if not isinstance(key, int):
@@ -70,7 +70,6 @@ class CaesarCipher(EncryptionInterface):
             self.logger.error("Error during the decryption of a message with the Caesar cipher. The key must be an int")
             return False
 
-        message = message.decode("utf-8")
 
         decryptedMessage = ""
 

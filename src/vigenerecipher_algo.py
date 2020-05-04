@@ -1,4 +1,4 @@
-"""Implementation of the Vigenère cipher enryption method (use of interwoven
+"""Implementation of the Vigenere cipher enryption method (use of interwoven
 Caesar ciphers)"""
 
 import logging
@@ -20,17 +20,17 @@ class VigenereCipher(EncryptionInterface):
 
         if not isinstance(message, str):
 
-            self.logger.error("Error during the encryption of a message with the Vigenère cipher. The message must be a string")
+            self.logger.error("Error during the encryption of a message with the Vigenere cipher. The message must be a string")
             return False
 
         elif not isinstance(key, str):
 
-            self.logger.error("Error during the encryption of a message with the Vigenère cipher. The key must be an string")
+            self.logger.error("Error during the encryption of a message with the Vigenere cipher. The key must be an string")
             return False
 
         elif key == "":
 
-            self.logger.error("Error during the encryption of a message with the Vigenère cipher. The key cannot be an empty string")
+            self.logger.error("Error during the encryption of a message with the Vigenere cipher. The key cannot be an empty string")
             return False
 
         newKey = ""
@@ -39,7 +39,7 @@ class VigenereCipher(EncryptionInterface):
 
             if key[i].lower() not in VigenereCipher.alphabet:
 
-                self.logger.error("Error during the encryption of a message with the Vigenère cipher. The key cannot contain accents or special characters")
+                self.logger.error("Error during the encryption of a message with the Vigenere cipher. The key cannot contain accents or special characters")
                 return False
 
             newKey = newKey + key[i].lower()
@@ -61,7 +61,7 @@ class VigenereCipher(EncryptionInterface):
 
                 except ValueError:
 
-                    self.logger.error("Error during the encryption of a message with the Vigenère cipher. One of the letters in the message could not be found in the alphabet")
+                    self.logger.error("Error during the encryption of a message with the Vigenere cipher. One of the letters in the message could not be found in the alphabet")
                     return False
 
                 if i.isupper():
@@ -76,34 +76,33 @@ class VigenereCipher(EncryptionInterface):
 
                 encryptedMessage = encryptedMessage + i
 
-        return bytes(encryptedMessage, encoding="utf-8")
+        return encryptedMessage
 
 
     def decrypt(self, message, key=0):
 
-        if not isinstance(message, bytes):
+        if not isinstance(message, str):
 
-            self.logger.error("Error during the decryption of a message with the Vigenère cipher. The message must be a bytes object")
+            self.logger.error("Error during the decryption of a message with the Vigenere cipher. The message must be a string")
             return False
 
         elif not isinstance(key, str):
 
-            self.logger.error("Error during the decryption of a message with the Vigenère cipher. The key must be an string")
+            self.logger.error("Error during the decryption of a message with the Vigenere cipher. The key must be an string")
             return False
 
         elif key == "":
 
-            self.logger.error("Error during the decryption of a message with the Vigenère cipher. The key cannot be an empty string")
+            self.logger.error("Error during the decryption of a message with the Vigenere cipher. The key cannot be an empty string")
             return False
 
         newKey = ""
-        message = message.decode("utf-8")
 
         for i in range(0, len(key)):
 
             if key[i].lower() not in VigenereCipher.alphabet:
 
-                self.logger.error("Error during the decryption of a message with the Vigenère cipher. The key cannot contain accents or special characters")
+                self.logger.error("Error during the decryption of a message with the Vigenere cipher. The key cannot contain accents or special characters")
                 return False
 
             newKey = newKey + key[i].lower()
@@ -125,7 +124,7 @@ class VigenereCipher(EncryptionInterface):
 
                 except ValueError:
 
-                    self.logger.error("Error during the decryption of a message with the Vigenère cipher. One of the letters in the encrypted message could not be found in the alphabet")
+                    self.logger.error("Error during the decryption of a message with the Vigenere cipher. One of the letters in the encrypted message could not be found in the alphabet")
                     return False
 
                 if i.isupper():

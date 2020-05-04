@@ -38,7 +38,7 @@ class EnigmaM3(EncryptionInterface):
         encryptedText = Enigma(settings=key[0],rotors=key[1],reflector='B',
                                ringstellung=key[2],steckers=key[3]).encipher(message)
 
-        return bytes(encryptedText, encoding="utf-8")
+        return encryptedText
 
 
     def decrypt(self, message, key=0):
@@ -49,9 +49,9 @@ class EnigmaM3(EncryptionInterface):
        - a tuple of three chars for the ring settings
        - a list of 10 tuples of two chars (at most) for the plugboard settings"""
 
-        if not isinstance(message, bytes):
+        if not isinstance(message, str):
 
-            self.logger.error("Error during the decryption of a message with Enigma. The message must be a bytes object")
+            self.logger.error("Error during the decryption of a message with Enigma. The message must be a string")
             return False
 
         if not self.checkKeyFormat(key):
@@ -59,7 +59,6 @@ class EnigmaM3(EncryptionInterface):
             self.logger.error("Error during the decryption of a message with Enigma. The settings provided do not follow the right format")
             return False
 
-        message = message.decode("utf-8")
 
         decryptedText = Enigma(settings=key[0],rotors=key[1],reflector='B',
                                ringstellung=key[2],steckers=key[3]).decipher(message)

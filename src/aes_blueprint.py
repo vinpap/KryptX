@@ -1,10 +1,11 @@
 import logging
 import logging.handlers
 
-from flask import render_template, abort
+from flask import render_template, abort, request
 from jinja2 import TemplateNotFound
 
 from baseblueprint import BaseBlueprint
+from aes_algo import AdvancedEncryptionStandard
 
 class AESBlueprint(BaseBlueprint):
     
@@ -16,10 +17,14 @@ class AESBlueprint(BaseBlueprint):
         fh.setFormatter(logging.Formatter(fmt='%(asctime)s - %(levelname)s - %(name)s - %(message)s'))
         self.logger.addHandler(fh)
         
+        self.algo = AdvancedEncryptionStandard()
+        
         url = "/aes"
         super().__init__('AES', 'MODERN', url)
         
         self.add_url_rule(url, "aes", self.AES)
+        self.add_url_rule(url + "/encryption", "aes_encryption", self.displayEncryptedText, methods=["POST"])
+        self.add_url_rule(url + "/decryption", "aes_decryption", self.displayDecryptedText, methods=["POST"])
         
     
     def AES(self):
@@ -27,8 +32,97 @@ class AESBlueprint(BaseBlueprint):
         """This method is called when a request is sent to /aes"""
         
         try:
+
+            return render_template("aes.html", 
+                                   mode="homepage",
+                                   allAlgos=self._allAlgosSorted, 
+                                   historicalAlgos=self._historicalAlgosSorted, 
+                                   outdatedAlgos=self._outdatedAlgosSorted,
+                                   modernAlgos=self._modernAlgosSorted,
+                                   hashingAlgos=self._hashingAlgosSorted)
+        
+        except TemplateNotFound:
             
-            return render_template("aes.html", allAlgos=self._allAlgosSorted, 
+            abort(404)
+    
+    def displayEncryptedText(self):
+        
+        message = request.form["message"]
+        key = request.form["key_area"]
+        
+        
+        
+        if len(bytes(key, encoding='utf-8')) not in (16, 24, 32):
+            
+            errorMsg = ("This key is not valid. Please enter a key of 128, "
+                        "192 or 256 bits. This amounts to 16, 24 or 32 "
+                        "characters in ASCII")
+            try:
+
+                return render_template("aes.html",
+                                   mode="encryptionError",
+                                   error=errorMsg,
+                                   allAlgos=self._allAlgosSorted, 
+                                   historicalAlgos=self._historicalAlgosSorted, 
+                                   outdatedAlgos=self._outdatedAlgosSorted,
+                                   modernAlgos=self._modernAlgosSorted,
+                                   hashingAlgos=self._hashingAlgosSorted)
+        
+            except TemplateNotFound:
+            
+                abort(404)
+        
+        encryptedText = str(self.algo.encrypt(message, key))
+        
+        try:
+
+            return render_template("aes.html",
+                                   mode="displayEncryptedText",
+                                   encryptedMessage=encryptedText,
+                                   allAlgos=self._allAlgosSorted, 
+                                   historicalAlgos=self._historicalAlgosSorted, 
+                                   outdatedAlgos=self._outdatedAlgosSorted,
+                                   modernAlgos=self._modernAlgosSorted,
+                                   hashingAlgos=self._hashingAlgosSorted)
+        
+        except TemplateNotFound:
+            
+            abort(404)
+        
+    
+    def displayDecryptedText(self):
+        
+        message = request.form["message"]
+        key = request.form["key_area"]
+        
+        if len(bytes(key, encoding='utf-8')) not in (16, 24, 32):
+            
+            errorMsg = ("This key is not valid. Please enter a key of 128, "
+                        "192 or 256 bits. This amounts to 16, 24 or 32 "
+                        "characters in ASCII")
+            try:
+
+                return render_template("aes.html",
+                                   mode="decryptionError",
+                                   error=errorMsg,
+                                   allAlgos=self._allAlgosSorted, 
+                                   historicalAlgos=self._historicalAlgosSorted, 
+                                   outdatedAlgos=self._outdatedAlgosSorted,
+                                   modernAlgos=self._modernAlgosSorted,
+                                   hashingAlgos=self._hashingAlgosSorted)
+        
+            except TemplateNotFound:
+            
+                abort(404)
+        
+        decryptedText = self.algo.decrypt(message, key)
+        
+        try:
+
+            return render_template("aes.html", 
+                                   mode="displayDecryptedText",
+                                   decryptedMessage=decryptedText,
+                                   allAlgos=self._allAlgosSorted, 
                                    historicalAlgos=self._historicalAlgosSorted, 
                                    outdatedAlgos=self._outdatedAlgosSorted,
                                    modernAlgos=self._modernAlgosSorted,
@@ -38,13 +132,7 @@ class AESBlueprint(BaseBlueprint):
             
             abort(404)
 
-    def encrypt(self, message, key):
-        
-        return
-    
-    def decrypt(self, message, key):
-        
-        return
+
     
 
         
