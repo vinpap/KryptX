@@ -49,11 +49,44 @@ class EnigmaM3Blueprint(BaseBlueprint):
     def displayEncryptedText(self):
         
         message = request.form["message"]
-        key = request.form["key_area"]
+        
+        
+        settings = []
+        settings.append((request.form["first_rotor_start"], request.form["second_rotor_start"], request.form["third_rotor_start"]))
+        settings.append((int(request.form["first_rotor_used"]), int(request.form["second_rotor_used"]), int(request.form["third_rotor_used"])))
+        settings.append((request.form["ring_settings_1"], request.form["ring_settings_2"], request.form["ring_settings_3"]))
+        
+        settings.append([ 
+            (request.form["plugboard_settings_1_1"],
+            request.form["plugboard_settings_1_2"]),
+            (request.form["plugboard_settings_2_1"],
+            request.form["plugboard_settings_2_2"]),
+            (request.form["plugboard_settings_3_1"],
+            request.form["plugboard_settings_3_2"]),
+            (request.form["plugboard_settings_4_1"],
+            request.form["plugboard_settings_4_2"]),
+            (request.form["plugboard_settings_5_1"],
+            request.form["plugboard_settings_5_2"]),
+            (request.form["plugboard_settings_6_1"],
+            request.form["plugboard_settings_6_2"]),
+            (request.form["plugboard_settings_7_1"],
+            request.form["plugboard_settings_7_2"]),
+            (request.form["plugboard_settings_8_1"],
+            request.form["plugboard_settings_8_2"]),
+            (request.form["plugboard_settings_9_1"],
+            request.form["plugboard_settings_9_2"]),
+            (request.form["plugboard_settings_10_1"],
+            request.form["plugboard_settings_10_2"])
+            ])
+        
+        self.logger.info("Message: ")
+        self.logger.info(message)
+        self.logger.info("Settings: ")
+        self.logger.info(str(settings))
         
 
         
-        encryptedText = str(self.algo.encrypt(message, key))
+        encryptedText = str(self.algo.encrypt(message, settings))
         
         try:
 
@@ -74,10 +107,43 @@ class EnigmaM3Blueprint(BaseBlueprint):
     def displayDecryptedText(self):
         
         message = request.form["message"]
-        key = request.form["key_area"]
         
         
-        decryptedText = self.algo.decrypt(message, key)
+        settings = []
+        settings.append((request.form["first_rotor_start"], request.form["second_rotor_start"], request.form["third_rotor_start"]))
+        settings.append((int(request.form["first_rotor_used"]), int(request.form["second_rotor_used"]), int(request.form["third_rotor_used"])))
+        settings.append((request.form["ring_settings_1"], request.form["ring_settings_2"], request.form["ring_settings_3"]))
+        
+        settings.append([ 
+            (request.form["plugboard_settings_1_1"],
+            request.form["plugboard_settings_1_2"]),
+            (request.form["plugboard_settings_2_1"],
+            request.form["plugboard_settings_2_2"]),
+            (request.form["plugboard_settings_3_1"],
+            request.form["plugboard_settings_3_2"]),
+            (request.form["plugboard_settings_4_1"],
+            request.form["plugboard_settings_4_2"]),
+            (request.form["plugboard_settings_5_1"],
+            request.form["plugboard_settings_5_2"]),
+            (request.form["plugboard_settings_6_1"],
+            request.form["plugboard_settings_6_2"]),
+            (request.form["plugboard_settings_7_1"],
+            request.form["plugboard_settings_7_2"]),
+            (request.form["plugboard_settings_8_1"],
+            request.form["plugboard_settings_8_2"]),
+            (request.form["plugboard_settings_9_1"],
+            request.form["plugboard_settings_9_2"]),
+            (request.form["plugboard_settings_10_1"],
+            request.form["plugboard_settings_10_2"])
+            ])
+        
+        self.logger.info("Message: ")
+        self.logger.info(message)
+        self.logger.info("Settings: ")
+        self.logger.info(str(settings))
+        
+        
+        decryptedText = self.algo.decrypt(message, settings)
         
         try:
 
