@@ -1,10 +1,11 @@
 import logging
 import logging.handlers
 
-from flask import render_template, abort
+from flask import render_template, abort, request
 from jinja2 import TemplateNotFound
 
 from baseblueprint import BaseBlueprint
+from sha_algo import SHA as SHA_algo
 
 class SHABlueprint(BaseBlueprint):
     
@@ -16,10 +17,14 @@ class SHABlueprint(BaseBlueprint):
         fh.setFormatter(logging.Formatter(fmt='%(asctime)s - %(levelname)s - %(name)s - %(message)s'))
         self.logger.addHandler(fh)
         
+        self.algo = SHA_algo()
+        
         url = "/sha"
         super().__init__('SHA', 'HASHING', url)
         
         self.add_url_rule(url, "sha", self.SHA)
+        self.add_url_rule(url + "/encryption", "sha_encryption", self.displayEncryptedText, methods=["POST"])
+        
         
     
     def SHA(self):
@@ -28,7 +33,7 @@ class SHABlueprint(BaseBlueprint):
         
         try:
             
-            return render_template("index.html", allAlgos=self._allAlgosSorted, 
+            return render_template("sha.html", allAlgos=self._allAlgosSorted, 
                                    historicalAlgos=self._historicalAlgosSorted, 
                                    outdatedAlgos=self._outdatedAlgosSorted,
                                    modernAlgos=self._modernAlgosSorted,
@@ -39,4 +44,27 @@ class SHABlueprint(BaseBlueprint):
             abort(404)
     
 
+
+    def displayEncryptedText(self):
+        
+        message = request.form["message"]
+        
+        
+        
+        encryptedText = str(self.algo.encrypt(message))
+        
+        try:
+
+            return render_template("sha.html",
+                                   mode="displayEncryptedText",
+                                   encryptedMessage=encryptedText,
+                                   allAlgos=self._allAlgosSorted, 
+                                   historicalAlgos=self._historicalAlgosSorted, 
+                                   outdatedAlgos=self._outdatedAlgosSorted,
+                                   modernAlgos=self._modernAlgosSorted,
+                                   hashingAlgos=self._hashingAlgosSorted)
+        
+        except TemplateNotFound:
+            
+            abort(404)
         

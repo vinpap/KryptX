@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>KryptX - MD5</title>
+        <link rel="stylesheet" href="{{ url_for('static',filename='styles/base_style.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static',filename='styles/md5.css') }}" />
+        <link rel='icon' href="{{ url_for('static',filename='files/favicon.ico') }}" type='image/x-icon'/ >
+        <script src="{{ url_for('static',filename='js/des.js') }}"></script>
+    </head>
+    <body>
+        <nav class="navigation_bar">
+            <div class="logo_container">
+                <a href="/"><img src="{{ url_for('static',filename='files/logo.png') }}" alt="logo" class="logo"/></a>
+            </div>
+            <div class="dropdown">
+                <div class="dropbtn">
+                    <span>ALL ENCRYPTION METHODS</span>
+                </div>
+                <div class="dropdown-content">
+                    {% for item in allAlgos %}
+                    <a href="{{ item[1] }}">{{ item[0] }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="dropdown">
+                <div class="dropbtn">
+                    <span>HISTORICAL</span>
+                </div>
+                <div class="dropdown-content">
+                    {% for item in historicalAlgos %}
+                    <a href="{{ item[1] }}">{{ item[0] }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="dropdown">
+                <div class="dropbtn">
+                    <span>OUTDATED</span>
+                </div>
+                <div class="dropdown-content">
+                    {% for item in outdatedAlgos %}
+                    <a href="{{ item[1] }}">{{ item[0] }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="dropdown">
+                <div class="dropbtn">
+                    <span>MODERN</span>
+                </div>
+                <div class="dropdown-content">
+                    {% for item in modernAlgos %}
+                    <a href="{{ item[1] }}">{{ item[0] }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="dropdown">
+                <div class="dropbtn">
+                    <span>HASHING</span>
+                </div>
+                <div class="dropdown-content">
+                    {% for item in hashingAlgos %}
+                    <a href="{{ item[1] }}">{{ item[0] }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </nav>
+        <div class="central_zone">
+            <div id="encryption_zone">
+                {% if mode == "displayEncryptedText" %}
+                <div id="processed_text">
+                    <span>Encrypted text:</span>
+                    <p>{{ encryptedMessage }}</p>
+                </div>
+                {% endif %}
+                <div id="encryption_form">
+                    <form method="post" action="/md5/encryption">
+                        <p>
+                            <label for="clear_message_area">Enter the message you want to hash here: </label><br/>
+                            <textarea class="centered_form_content" name="message" id="clear_message_area" rows="10" cols="50" required></textarea><br/><br/>
+                            <input class="centered_form_button" type="submit" value="Hash" />
+                        </p>
+                    </form>
+                </div>
+                    {% if mode == "encryptionError" %}
+                        <script>encryptButtonClicked();</script>
+                        <span class="error">{{ error }}</span>
+                    {% elif mode == "decryptionError" %}
+                        <script>decryptButtonClicked();</script>
+                        <span class="error">{{ error }}</span>
+                    {% endif %}
+            </div>
+            <div class="description">
+                <p>Appartement de tapage, d'horribles désirs d'anéantir cette satire. Renversant la tête, deux, trois, cela ferait plaisir, je vous donnerai vingt-cinq louis par an cette voix sans pareille et cette admirable méthode, mais un des ministres de cette religion elle-même que de la voix humaine ; ce qui sera bien. Souvent les individus eux-mêmes sont en mesure de juger objectivement de la stratégie parlementaire ? Oubliés, passés au delà des pointes d'aiguilles, avaient simplement traversé la peau. Entré dans l'eau qui retombait de partout, l'industrie est encouragée. Causons un peu, puis s'était un peu ma propre histoire, et buvons encore un coup de lumière imprévu. Badin, folâtre, inépuisable, pour ceux qui vont gagner votre argent ? Entendez-vous, il y serait, je crois ; je n'imprime pas mes livres pour acquérir de nouvelles forces ; un violent coup de tonnerre : la tempête était encore dans son ignorance.
+                Lorsqu'elle vit entrer son capitaine, c'était parmi ces derniers, côte à côte de grandes enjambées, un homme comme le président ? Rappelez l'un des coins, et peuplent en un instant et l'emporter où il emportait ses autres femmes témoignèrent un grand empressement envers des gens du monde. Emportés par une vague frayeur des cimetières, une confiance trop complaisante dans le témoignage spontané les erreurs sont d'excellents livres. Entièrement à mon insu je galopasse tout à l'heure ce que la nature l'avait écrit, la veille, à étudier avec attention. Enchanté de vous voir, monsieur. Asseyez-vous, monsieur, toutes ces divagations cédaient enfin devant ce quelque chose plus haut que la densité du fluide autour d'elles, vêtue d'une simple négative. Trahison ou non, prononcé par sa belle tenue et de l'être curieux de la science n'est pas vide pour vous, si elle ne germait pas. Revenons à la prééminence des armes sur soi, cohésion, hiérarchie, autorité absolue du chef, voilà ce qui vous arrête ?</p>
+            </div>
+   
+        </div>
+    </body>
+    <footer>
+        <p>©2020 KryptX, Vincent Papelard</p>
+    </footer>
+
+</html>
