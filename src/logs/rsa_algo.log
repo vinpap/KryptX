@@ -1,0 +1,1 @@
+2020-08-24 15:18:40,090 - ERROR - rsa_algo - Error during the encryption of a message with RSA. The key must be a bytes object

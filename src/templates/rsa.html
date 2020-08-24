@@ -69,7 +69,7 @@
                 <div id="buttons_zone">
                     <button type="button" id="encrypt_button" class="encrypt_decrypt_button" onclick="encryptButtonClicked();">Encrypt</button>
                     <button type="button" id="decrypt_button" class="encrypt_decrypt_button" onclick="decryptButtonClicked();">Decrypt</button>
-                    <button type="button" id="keys_generation_button" class="encrypt_decrypt_button" onclick="keysGenerationButtonClicked();">Generate keys pair</button>
+                    <button type="button" id="keys_generation_button" class="keys_generation_button" onclick="keysGenerationButtonClicked();">Generate keys pair</button>
                 </div>
                 {% if mode == "displayEncryptedText" %}
                 <div id="processed_text">
@@ -112,7 +112,7 @@
                 <div id="keys_generator">
                     <form method="post" action="/rsa/keys_generator">
                         <p>
-                            <label for="encrypted_message_area">Click the button below to generate a RSA keys pair. This pair is made of two keys. The <span class="important">public key</span> is used for encryption and must be given to anyone who wants to send you a message. The <span class="important">private key</span> is used to decrypt a message encrypted with the corresponding public key, and must be secret.</label><br/>
+                            <label for="encrypted_message_area">Click the button below to generate a RSA keys pair. This pair is made of two keys. The <span class="important">public key</span> is used for encryption and must be given to anyone who wants to send you a message. The <span class="important">private key</span> is used to decrypt a message encrypted with the corresponding public key, and must be secret.</label><br/><br/>
                             <input class="centered_form_button" type="submit" value="Generate a RSA keys pair" />
                         </p>
                     </form>

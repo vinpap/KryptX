@@ -24,10 +24,12 @@ class RSAAlgo(EncryptionInterface):
             self.logger.error("Error during the encryption of a message with RSA. The message must be a string")
             return False
 
-        if not isinstance(key, bytes):
+        if not isinstance(key, str):
 
-            self.logger.error("Error during the encryption of a message with RSA. The key must be a bytes object")
+            self.logger.error("Error during the encryption of a message with RSA. The key must be a string")
             return False
+        
+        key = bytes.fromhex(key)
 
         publicKey = RSA.importKey(key)
         encryptedMessage = publicKey.encrypt(bytes(message, encoding="utf-8"), b"random")
@@ -43,12 +45,13 @@ class RSAAlgo(EncryptionInterface):
             self.logger.error("Error during the decryption of a message with RSA. The message must be a string")
             return False
 
-        if not isinstance(key, bytes):
+        if not isinstance(key, str):
 
-            self.logger.error("Error during the decryption of a message with RSA. The key must be a bytes object")
+            self.logger.error("Error during the decryption of a message with RSA. The key must be a string")
             return False
         
         message = bytes.fromhex(message)
+        key = bytes.fromhex(key)
 
         privateKey = RSA.importKey(key)
         decryptedMessage = privateKey.decrypt(message)
@@ -61,4 +64,4 @@ class RSAAlgo(EncryptionInterface):
         privateKey = newKey.exportKey("PEM")
         publicKey = newKey.publickey().exportKey("PEM")
 
-        return (privateKey, publicKey)
+        return (str(privateKey), str(publicKey))

@@ -69,7 +69,7 @@ function keysGenerationButtonClicked() {
     let encryptionForm = document.getElementById("encryption_form");
     encryptionForm.style.display = "";
     let decryptionForm = document.getElementById("decryption_form");
-    encryptionForm.style.display = "";
+    decryptionForm.style.display = "";
     let processedMessage = document.getElementById("processed_text");
     if (processedMessage) processedMessage.style.display = "none";    
   }

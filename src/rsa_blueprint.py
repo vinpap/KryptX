@@ -23,6 +23,9 @@ class RSABlueprint(BaseBlueprint):
         super().__init__('RSA', 'MODERN', url)
         
         self.add_url_rule(url, "rsa", self.RSA)
+        self.add_url_rule(url + "/encryption", "rsa_encryption", self.displayEncryptedText, methods=["POST"])
+        self.add_url_rule(url + "/decryption", "rsa_decryption", self.displayDecryptedText, methods=["POST"])
+        self.add_url_rule(url + "/keysgeneration", "rsa_keys_generation", self.displayKeysPair)
         
     
     def RSA(self):
@@ -42,4 +45,93 @@ class RSABlueprint(BaseBlueprint):
             abort(404)
     
 
+    def displayEncryptedText(self):
         
+        message = request.form["message"]
+        key = request.form["key_area"]
+        
+        
+        
+        """if len(bytes(key, encoding='utf-8')) not in range(8, 16, 24):
+            
+            errorMsg = ("This key is not valid. Please enter a key of 64, "
+                        "128 or 192 bits. This amounts to 8, 16 or 24 "
+                        "characters in ASCII")
+            try:
+
+                return render_template("rsa.html",
+                                   mode="encryptionError",
+                                   error=errorMsg,
+                                   allAlgos=self._allAlgosSorted, 
+                                   historicalAlgos=self._historicalAlgosSorted, 
+                                   outdatedAlgos=self._outdatedAlgosSorted,
+                                   modernAlgos=self._modernAlgosSorted,
+                                   hashingAlgos=self._hashingAlgosSorted)
+        
+            except TemplateNotFound:
+            
+                abort(404)"""
+        
+        encryptedText = str(self.algo.encrypt(message, key))
+        
+        try:
+
+            return render_template("rsa.html",
+                                   mode="displayEncryptedText",
+                                   encryptedMessage=encryptedText,
+                                   allAlgos=self._allAlgosSorted, 
+                                   historicalAlgos=self._historicalAlgosSorted, 
+                                   outdatedAlgos=self._outdatedAlgosSorted,
+                                   modernAlgos=self._modernAlgosSorted,
+                                   hashingAlgos=self._hashingAlgosSorted)
+        
+        except TemplateNotFound:
+            
+            abort(404)
+        
+    
+    def displayDecryptedText(self):
+        
+        message = request.form["message"]
+        key = request.form["key_area"]
+        
+        """if len(bytes(key, encoding='utf-8')) not in range(8, 16, 24):
+            
+            errorMsg = ("This key is not valid. Please enter a key of 64, "
+                        "128 or 192 bits. This amounts to 8, 16 or 24 "
+                        "characters in ASCII")
+            try:
+
+                return render_template("rsa.html",
+                                   mode="decryptionError",
+                                   error=errorMsg,
+                                   allAlgos=self._allAlgosSorted, 
+                                   historicalAlgos=self._historicalAlgosSorted, 
+                                   outdatedAlgos=self._outdatedAlgosSorted,
+                                   modernAlgos=self._modernAlgosSorted,
+                                   hashingAlgos=self._hashingAlgosSorted)
+        
+            except TemplateNotFound:
+            
+                abort(404)"""
+        
+        decryptedText = self.algo.decrypt(message, key)
+        
+        try:
+
+            return render_template("rsa.html", 
+                                   mode="displayDecryptedText",
+                                   decryptedMessage=decryptedText,
+                                   allAlgos=self._allAlgosSorted, 
+                                   historicalAlgos=self._historicalAlgosSorted, 
+                                   outdatedAlgos=self._outdatedAlgosSorted,
+                                   modernAlgos=self._modernAlgosSorted,
+                                   hashingAlgos=self._hashingAlgosSorted)
+        
+        except TemplateNotFound:
+            
+            abort(404)
+
+    def displayKeysPair(self):
+        
+        pass
