@@ -107,3 +107,12 @@
 {
     color: red;
 }
+.long_text
+{
+    word-wrap: break-word
+}
+.rsa_keys
+{
+    white-space: pre-wrap
+        
+}

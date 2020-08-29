@@ -2,6 +2,7 @@
 
 import logging
 import logging.handlers
+import base64
 from Crypto.PublicKey import RSA
 from encryptioninterface import EncryptionInterface
 
@@ -28,14 +29,20 @@ class RSAAlgo(EncryptionInterface):
 
             self.logger.error("Error during the encryption of a message with RSA. The key must be a string")
             return False
+
         
-        key = bytes.fromhex(key)
+        key = bytes(key, "utf-8")
 
+    
         publicKey = RSA.importKey(key)
-        encryptedMessage = publicKey.encrypt(bytes(message, encoding="utf-8"), b"random")
+        
+        message = bytes(message, "utf-8")
 
+        encryptedMessage = publicKey.encrypt(message, b"random")
+        encryptedMessage = base64.b64encode(encryptedMessage[0])
+        
 
-        return encryptedMessage[0].hex()
+        return encryptedMessage.decode("utf-8")
 
     def decrypt(self, message, key=0):
 
@@ -50,8 +57,11 @@ class RSAAlgo(EncryptionInterface):
             self.logger.error("Error during the decryption of a message with RSA. The key must be a string")
             return False
         
-        message = bytes.fromhex(message)
-        key = bytes.fromhex(key)
+        message = message.encode("utf-8")
+  
+        message = base64.b64decode(message) 
+        
+        key = bytes(key, "utf-8")
 
         privateKey = RSA.importKey(key)
         decryptedMessage = privateKey.decrypt(message)
@@ -64,4 +74,8 @@ class RSAAlgo(EncryptionInterface):
         privateKey = newKey.exportKey("PEM")
         publicKey = newKey.publickey().exportKey("PEM")
 
-        return (str(privateKey), str(publicKey))
+        
+        privateKey = privateKey.decode("utf-8")
+        publicKey = publicKey.decode("utf-8")
+        
+        return (privateKey, publicKey)

@@ -25,7 +25,7 @@ class RSABlueprint(BaseBlueprint):
         self.add_url_rule(url, "rsa", self.RSA)
         self.add_url_rule(url + "/encryption", "rsa_encryption", self.displayEncryptedText, methods=["POST"])
         self.add_url_rule(url + "/decryption", "rsa_decryption", self.displayDecryptedText, methods=["POST"])
-        self.add_url_rule(url + "/keysgeneration", "rsa_keys_generation", self.displayKeysPair)
+        self.add_url_rule(url + "/keysgeneration", "rsa_keys_generation", self.displayKeysPair, methods=["POST"])
         
     
     def RSA(self):
@@ -134,4 +134,20 @@ class RSABlueprint(BaseBlueprint):
 
     def displayKeysPair(self):
         
-        pass
+        keysPair = self.algo.generateKeysPair()
+        
+        try:
+
+            return render_template("rsa.html", 
+                                   mode="displayKeysPair",
+                                   privateKey=keysPair[0],
+                                   publicKey=keysPair[1],
+                                   allAlgos=self._allAlgosSorted, 
+                                   historicalAlgos=self._historicalAlgosSorted, 
+                                   outdatedAlgos=self._outdatedAlgosSorted,
+                                   modernAlgos=self._modernAlgosSorted,
+                                   hashingAlgos=self._hashingAlgosSorted)
+        
+        except TemplateNotFound:
+            
+            abort(404)

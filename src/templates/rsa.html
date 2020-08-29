@@ -74,17 +74,19 @@
                 {% if mode == "displayEncryptedText" %}
                 <div id="processed_text">
                     <span>Encrypted text:</span>
-                    <p>{{ encryptedMessage }}</p>
+                    <p class = "long_text">{{ encryptedMessage }}</p>
                 </div>
                 {% elif mode == "displayDecryptedText" %}
                 <div id="processed_text">
                     <span>Decrypted text:</span>
-                    <p>{{ decryptedMessage }}</p>
+                    <p class = "long_text">{{ decryptedMessage }}</p>
                 </div>
                 {% elif mode == "displayKeysPair" %}
                 <div id="processed_text">
-                    <span>Decrypted text:</span>
-                    <p>CODER AFFICHAGE DE LA PAIRE DE CLÉS</p>
+                    <span class="important">Private key:</span>
+                    <p class = "rsa_keys">{{ privateKey }}</p>
+                    <span class="important">Public key:</span>
+                    <p class = "rsa_keys">{{ publicKey }}</p>
                 </div>
                 {% endif %}
                 <div id="encryption_form">
@@ -93,7 +95,7 @@
                             <label for="clear_message_area">Enter the message you want to encrypt here: </label><br/>
                             <textarea class="centered_form_content" name="message" id="clear_message_area" rows="10" cols="50" required></textarea><br/><br/>
                             <label for="encryption_key_area">Enter your key here: </label><br/>
-                            <textarea class="centered_form_content" name="key_area" id="encryption_key_area" cols="50" required></textarea><br/><br/>
+                            <textarea class="centered_form_content" name="key_area" id="encryption_key_area" rows="13" cols="50" required></textarea><br/><br/>
                             <input class="centered_form_button" type="submit" value="Encrypt" />
                         </p>
                     </form>
@@ -104,15 +106,15 @@
                             <label for="encrypted_message_area">Enter the message you want to decrypt here: </label><br/>
                             <textarea class="centered_form_content" name="message" id="encrypted_message_area" rows="10" cols="50" required></textarea><br/><br/>
                             <label for="decryption_key_area">Enter your key here: </label><br/>
-                            <textarea class="centered_form_content" name="key_area" id="decryption_key_area" cols="50" required></textarea><br/><br/>
+                            <textarea class="centered_form_content" name="key_area" id="decryption_key_area" rows="20" cols="50" required></textarea><br/><br/>
                             <input class="centered_form_button" type="submit" value="Decrypt" />
                         </p>
                     </form>
                 </div>
                 <div id="keys_generator">
-                    <form method="post" action="/rsa/keys_generator">
+                    <form method="post" action="/rsa/keysgeneration">
                         <p>
-                            <label for="encrypted_message_area">Click the button below to generate a RSA keys pair. This pair is made of two keys. The <span class="important">public key</span> is used for encryption and must be given to anyone who wants to send you a message. The <span class="important">private key</span> is used to decrypt a message encrypted with the corresponding public key, and must be secret.</label><br/><br/>
+                            <label for="encrypted_message_area">Click the button below to generate a RSA keys pair. This pair is made of two keys. The <span class="important">public key</span> is used for encryption and must be given to anyone who wants to send you a message. The <span class="important">private key</span> is used to decrypt a message encrypted with the corresponding public key, and must be secret. The keys generated here are 4096 bits long. The tool offered on this website encodes the encrypted text in base 64.</label><br/><br/>
                             <input class="centered_form_button" type="submit" value="Generate a RSA keys pair" />
                         </p>
                     </form>
