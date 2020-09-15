@@ -112,8 +112,36 @@
                     {% endif %}
             </div>
             <div class="description">
-                <p>Appartement de tapage, d'horribles désirs d'anéantir cette satire. Renversant la tête, deux, trois, cela ferait plaisir, je vous donnerai vingt-cinq louis par an cette voix sans pareille et cette admirable méthode, mais un des ministres de cette religion elle-même que de la voix humaine ; ce qui sera bien. Souvent les individus eux-mêmes sont en mesure de juger objectivement de la stratégie parlementaire ? Oubliés, passés au delà des pointes d'aiguilles, avaient simplement traversé la peau. Entré dans l'eau qui retombait de partout, l'industrie est encouragée. Causons un peu, puis s'était un peu ma propre histoire, et buvons encore un coup de lumière imprévu. Badin, folâtre, inépuisable, pour ceux qui vont gagner votre argent ? Entendez-vous, il y serait, je crois ; je n'imprime pas mes livres pour acquérir de nouvelles forces ; un violent coup de tonnerre : la tempête était encore dans son ignorance.
-                Lorsqu'elle vit entrer son capitaine, c'était parmi ces derniers, côte à côte de grandes enjambées, un homme comme le président ? Rappelez l'un des coins, et peuplent en un instant et l'emporter où il emportait ses autres femmes témoignèrent un grand empressement envers des gens du monde. Emportés par une vague frayeur des cimetières, une confiance trop complaisante dans le témoignage spontané les erreurs sont d'excellents livres. Entièrement à mon insu je galopasse tout à l'heure ce que la nature l'avait écrit, la veille, à étudier avec attention. Enchanté de vous voir, monsieur. Asseyez-vous, monsieur, toutes ces divagations cédaient enfin devant ce quelque chose plus haut que la densité du fluide autour d'elles, vêtue d'une simple négative. Trahison ou non, prononcé par sa belle tenue et de l'être curieux de la science n'est pas vide pour vous, si elle ne germait pas. Revenons à la prééminence des armes sur soi, cohésion, hiérarchie, autorité absolue du chef, voilà ce qui vous arrête ?</p>
+                <h2>AES (Advanced Encryption Standard)</h2>
+                <p>The Advanced Encryption Standard (AES) is a specification for the encryption of data created by the U.S. National Institute of Standards and Technology (NIST) in 2001. AES has been adopted by the U.S. government and is now used worldwide. It supersedes the Data Encryption Standard (DES), which was published in 1977. The algorithm described by AES is a symmetric-key algorithm, meaning the same key is used for both encrypting and decrypting the data.</p>
+                <p><span class="important">How it works:</span> AES is based on a design principle known as a substitution–permutation network. It uses a fixed block size of 128 bits, and a key size of 128, 192, or 256 bits. AES operates on a 4 × 4 array of bytes.</p>
+                <p>The key size used for an AES cipher specifies the number of transformation rounds that convert the input, called the plaintext, into the final output, called the ciphertext. The number of rounds are as follows:</p>
+                <ul>
+                <li>10 rounds for 128-bit keys</li>
+                <li>12 rounds for 192-bit keys</li>
+                <li>14 rounds for 256-bit keys</li>
+                </ul>
+                <p>Each round consists of several processing steps, including one that depends on the encryption key itself. A set of reverse rounds are applied to transform ciphertext back into the original plaintext using the same encryption key. Here are the tranformation rounds used by AES:</p>
+                <ol>
+                <li>KeyExpansion – round keys are derived from the cipher key using the AES key schedule. AES requires a separate 128-bit round key block for each round plus one more</li>
+                <li>Initial round key addition (AddRoundKey): each byte of the state is combined with a byte of the round key using bitwise xor</li>
+                <li>9, 11 or 13 rounds:<ol>
+                    <li>SubBytes – a non-linear substitution step where each byte is replaced with another according to a lookup table</li>
+                    <li>ShiftRows – a transposition step where the last three rows of the state are shifted cyclically a certain number of steps</li>
+                    <li>MixColumns – a linear mixing operation which operates on the columns of the state, combining the four bytes in each column</li>
+                    <li>AddRoundKey</li>
+                    </ol></li>
+                <li>Final round (making 10, 12 or 14 rounds in total):
+                    <ol>
+                        <li>SubBytes</li>
+                        <li>ShiftRows</li>
+                        <li>AddRoundKey</li>
+                    </ol>
+                </li>
+                </ol>
+
+                <p class="important">Security level : HIGH</p>
+                <p>At present, there is no known practical attack that would allow someone without knowledge of the key to read data encrypted by AES when correctly implemented. Although the algebra behind AES encryption algorithm is quite simple, the size of its key makes AES practically unbreakable against brute-force attacks, and there is no known successful attack against against AES to this day. Like any encryption method AES can, however, be very easily cracked if the key is poorly chosen, hence the importance of choosing a strong key.</p>
             </div>
    
         </div>

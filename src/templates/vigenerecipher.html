@@ -112,8 +112,42 @@
                     {% endif %}
             </div>
             <div class="description">
-                <p>Appartement de tapage, d'horribles désirs d'anéantir cette satire. Renversant la tête, deux, trois, cela ferait plaisir, je vous donnerai vingt-cinq louis par an cette voix sans pareille et cette admirable méthode, mais un des ministres de cette religion elle-même que de la voix humaine ; ce qui sera bien. Souvent les individus eux-mêmes sont en mesure de juger objectivement de la stratégie parlementaire ? Oubliés, passés au delà des pointes d'aiguilles, avaient simplement traversé la peau. Entré dans l'eau qui retombait de partout, l'industrie est encouragée. Causons un peu, puis s'était un peu ma propre histoire, et buvons encore un coup de lumière imprévu. Badin, folâtre, inépuisable, pour ceux qui vont gagner votre argent ? Entendez-vous, il y serait, je crois ; je n'imprime pas mes livres pour acquérir de nouvelles forces ; un violent coup de tonnerre : la tempête était encore dans son ignorance.
-                Lorsqu'elle vit entrer son capitaine, c'était parmi ces derniers, côte à côte de grandes enjambées, un homme comme le président ? Rappelez l'un des coins, et peuplent en un instant et l'emporter où il emportait ses autres femmes témoignèrent un grand empressement envers des gens du monde. Emportés par une vague frayeur des cimetières, une confiance trop complaisante dans le témoignage spontané les erreurs sont d'excellents livres. Entièrement à mon insu je galopasse tout à l'heure ce que la nature l'avait écrit, la veille, à étudier avec attention. Enchanté de vous voir, monsieur. Asseyez-vous, monsieur, toutes ces divagations cédaient enfin devant ce quelque chose plus haut que la densité du fluide autour d'elles, vêtue d'une simple négative. Trahison ou non, prononcé par sa belle tenue et de l'être curieux de la science n'est pas vide pour vous, si elle ne germait pas. Revenons à la prééminence des armes sur soi, cohésion, hiérarchie, autorité absolue du chef, voilà ce qui vous arrête ?</p>
+                <h2>Vigenère Cipher</h2>
+                <p>
+                    The Vigenère cipher is a method of encrypting alphabetic text by using a series of interwoven Caesar ciphers, based on the letters of a keyword. It employs a form of polyalphabetic substitution.
+                </p>
+                <p>
+                    <span class="important">How it works: </span>In a Caesar cipher, each letter of the alphabet is shifted along some number of places. For example, in a Caesar cipher of shift 3, A would become D, B would become E, Y would become B and so on. The Vigenère cipher has several Caesar ciphers in sequence with different shift values.
+                </p>
+                <p>
+                    To encrypt, a table of alphabets can be used, termed a tabula recta, Vigenère square or Vigenère table. It has the alphabet written out 26 times in different rows, each alphabet shifted cyclically to the left compared to the previous alphabet, corresponding to the 26 possible Caesar ciphers. At different points in the encryption process, the cipher uses a different alphabet from one of the rows. The alphabet used at each point depends on a repeating keyword.
+                </p>
+                <p>
+                    For example, suppose that the plaintext to be encrypted is ATTACKATDAWN.
+                </p>
+                <p>
+                    The person sending the message chooses a keyword and repeats it until it matches the length of the plaintext, for example, the keyword "LEMON": LEMONLEMONLE
+                </p>
+                <p>
+                    Each row starts with a key letter. The rest of the row holds the letters A to Z (in shifted order). Although there are 26 key rows shown, a code will use only as many keys (different alphabets) as there are unique letters in the key string, here just 5 keys: {L, E, M, O, N}. For successive letters of the message, successive letters of the key string will be taken and each message letter enciphered by using its corresponding key row. The next letter of the key is chosen, and that row is gone along to find the column heading that matches the message character. The letter at the intersection of [key-row, msg-col] is the enciphered letter.
+                </p>
+                <p>
+                    For example, the first letter of the plaintext, A, is paired with L, the first letter of the key. Therefore, row L and column A of the Vigenère square are used, namely L. Similarly, for the second letter of the plaintext, the second letter of the key is used. The letter at row E and column T is X. The rest of the plaintext is enciphered in a similar fashion:
+                </p>
+                <p>
+                    Plaintext:	ATTACKATDAWN<br>
+                    Key:	LEMONLEMONLE<br>
+                    Ciphertext:	LXFOPVEFRNHR
+                </p>
+                <p>
+                    Decryption is performed by going to the row in the table corresponding to the key, finding the position of the ciphertext letter in that row and then using the column's label as the plaintext. For example, in row L (from LEMON), the ciphertext L appears in column A, which is the first plaintext letter. Next, in row E (from LEMON), the ciphertext X is located in column T. Thus T is the second plaintext letter.
+                </p>
+                <p class="important">
+                    Security level: LOW
+                </p>
+                <p>
+                    This encryption algorithm is totally obsolete today. Different methods have been found to break the Vigenère Cipher. One of the weaknesses of this algorithm is that the length of its keyword can be found by detecting repetitions in the encrypted text. With today’s computing power, it is not difficult for an attacker to break that code.
+                </p>
             </div>
    
         </div>

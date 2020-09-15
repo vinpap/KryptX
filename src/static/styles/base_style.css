@@ -10,6 +10,10 @@ h1
 {
     font-size: 55px;
 }
+h2
+{
+    text-align: center;
+}
 .navigation_bar
 {
     display: flex;
