@@ -108,12 +108,20 @@
 {
     color: red;
 }
-.long_text
+#encrypted_Text
 {
-    word-wrap: break-word
+    word-wrap: break-word;
 }
-.rsa_keys
+#decrypted_Text
 {
-    white-space: pre-wrap
+    word-wrap: break-word;
+}
+#rsa_public_key
+{
+    white-space: pre-wrap;
         
+}
+#rsa_private_key
+{
+    white-space: pre-wrap;
 }

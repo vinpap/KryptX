@@ -1,6 +1,17 @@
 "use strict";
 
 
+function copyToClipboard(id) {
+    
+    var from = document.getElementById(id);
+    var range = document.createRange();
+    window.getSelection().removeAllRanges();
+    range.selectNodeContents(from);
+    window.getSelection().addRange(range);
+    document.execCommand('copy');
+    window.getSelection().removeAllRanges();
+}
+
 function encryptButtonClicked() {
     
     let encryptionForm = document.getElementById("encryption_form");

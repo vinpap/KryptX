@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="{{ url_for('static',filename='styles/base_style.css') }}" />
         <link rel="stylesheet" href="{{ url_for('static',filename='styles/md5.css') }}" />
         <link rel='icon' href="{{ url_for('static',filename='files/favicon.ico') }}" type='image/x-icon'/ >
-        <script src="{{ url_for('static',filename='js/des.js') }}"></script>
+        <script src="{{ url_for('static',filename='js/base_script.js') }}"></script>
     </head>
     <body>
         <nav class="navigation_bar">
@@ -68,8 +68,9 @@
             <div id="encryption_zone">
                 {% if mode == "displayEncryptedText" %}
                 <div id="processed_text">
-                    <span>Encrypted text:</span>
-                    <p>{{ encryptedMessage }}</p>
+                    <span>Hashed text:</span>
+                    <button onclick="copyToClipboard('hashed_Text')">Copy</button>
+                    <p id="hashed_Text">{{ encryptedMessage }}</p>
                 </div>
                 {% endif %}
                 <div id="encryption_form">

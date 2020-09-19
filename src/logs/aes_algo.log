@@ -1,7 +1,0 @@
-2020-05-04 14:57:45,408 - ERROR - aes_algo - Error during the decryption of a message with DES. The message must be a string
-2020-05-04 15:21:25,277 - ERROR - aes_algo - Error during the decryption of a message with DES. The message must be a string
-2020-05-04 15:26:23,220 - ERROR - aes_algo - Error during the decryption of a message with DES. The message must be a string
-2020-05-04 15:28:01,797 - ERROR - aes_algo - Error during the encryption of a message with DES. The key must be a string in ASCII format of length 16, 24 or 32
-2020-05-04 15:28:46,538 - ERROR - aes_algo - Error during the decryption of a message with DES. The message must be a string
-2020-05-04 15:37:58,509 - ERROR - aes_algo - Error during the decryption of a message with DES. The message must be a bytes object
-2020-05-04 15:53:14,456 - ERROR - aes_algo - Error during the encryption of a message with DES. The key must be a string in ASCII format of length 16, 24 or 32

@@ -74,19 +74,23 @@
                 {% if mode == "displayEncryptedText" %}
                 <div id="processed_text">
                     <span>Encrypted text:</span>
-                    <p class = "long_text">{{ encryptedMessage }}</p>
+                    <button onclick="copyToClipboard('encrypted_Text')">Copy</button>
+                    <p id = "encrypted_Text">{{ encryptedMessage }}</p>
                 </div>
                 {% elif mode == "displayDecryptedText" %}
                 <div id="processed_text">
                     <span>Decrypted text:</span>
-                    <p class = "long_text">{{ decryptedMessage }}</p>
+                    <button onclick="copyToClipboard('decrypted_Text')">Copy</button>
+                    <p id = "decrypted_Text">{{ decryptedMessage }}</p>
                 </div>
                 {% elif mode == "displayKeysPair" %}
                 <div id="processed_text">
                     <span class="important">Private key:</span>
-                    <p class = "rsa_keys">{{ privateKey }}</p>
+                    <button onclick="copyToClipboard('rsa_private_key')">Copy</button>
+                    <p id = "rsa_private_key">{{ privateKey }}</p>
                     <span class="important">Public key:</span>
-                    <p class = "rsa_keys">{{ publicKey }}</p>
+                    <button onclick="copyToClipboard('rsa_public_key')">Copy</button>
+                    <p id = "rsa_public_key">{{ publicKey }}</p>
                 </div>
                 {% endif %}
                 <div id="encryption_form">
@@ -94,7 +98,7 @@
                         <p>
                             <label for="clear_message_area">Enter the message you want to encrypt here: </label><br/>
                             <textarea class="centered_form_content" name="message" id="clear_message_area" rows="10" cols="50" required></textarea><br/><br/>
-                            <label for="encryption_key_area">Enter your key here: </label><br/>
+                            <label for="encryption_key_area">Enter your public key here: </label><br/>
                             <textarea class="centered_form_content" name="key_area" id="encryption_key_area" rows="13" cols="50" required></textarea><br/><br/>
                             <input class="centered_form_button" type="submit" value="Encrypt" />
                         </p>
@@ -105,7 +109,7 @@
                         <p>
                             <label for="encrypted_message_area">Enter the message you want to decrypt here: </label><br/>
                             <textarea class="centered_form_content" name="message" id="encrypted_message_area" rows="10" cols="50" required></textarea><br/><br/>
-                            <label for="decryption_key_area">Enter your key here: </label><br/>
+                            <label for="decryption_key_area">Enter your private key here: </label><br/>
                             <textarea class="centered_form_content" name="key_area" id="decryption_key_area" rows="20" cols="50" required></textarea><br/><br/>
                             <input class="centered_form_button" type="submit" value="Decrypt" />
                         </p>

@@ -34,6 +34,10 @@ class ServerCore:
         
         self.loadBlueprints()
     
+    def getApp(self):
+        
+        return self.app
+    
     def loadBlueprints(self):
         
         """Each encryption method has its own blueprint. All the different
