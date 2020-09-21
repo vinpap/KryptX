@@ -35,8 +35,8 @@ class EnigmaM3(EncryptionInterface):
             return False
 
 
-        encryptedText = Enigma(settings=key[0],rotors=key[1],reflector='B',
-                               ringstellung=key[2],steckers=key[3]).encipher(message)
+        encryptedText = Enigma(settings=key[0], rotors=key[1], reflector='B',
+                               ringstellung=key[2], steckers=key[3]).encipher(message)
 
         return encryptedText
 
@@ -60,8 +60,8 @@ class EnigmaM3(EncryptionInterface):
             return False
 
 
-        decryptedText = Enigma(settings=key[0],rotors=key[1],reflector='B',
-                               ringstellung=key[2],steckers=key[3]).decipher(message)
+        decryptedText = Enigma(settings=key[0], rotors=key[1], reflector='B',
+                               ringstellung=key[2], steckers=key[3]).decipher(message)
 
         return decryptedText
 

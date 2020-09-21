@@ -7,6 +7,9 @@ from jinja2 import TemplateNotFound
 from baseblueprint import BaseBlueprint
 from rsa_algo import RSAAlgo
 
+"""The class below is a blueprint loaded by Flask. See baseblueprint.py for
+more info"""
+
 class RSABlueprint(BaseBlueprint):
     
     def __init__(self):
@@ -47,16 +50,18 @@ class RSABlueprint(BaseBlueprint):
 
     def displayEncryptedText(self):
         
+        """This method is called when a request is sent to /rsa/encryption"""
+        
         message = request.form["message"]
         key = request.form["key_area"]
         
+        encryptedText = self.algo.encrypt(message, key)
         
         
-        """if len(bytes(key, encoding='utf-8')) not in range(8, 16, 24):
+        if encryptedText == 0: # If the key provided is invalid
             
-            errorMsg = ("This key is not valid. Please enter a key of 64, "
-                        "128 or 192 bits. This amounts to 8, 16 or 24 "
-                        "characters in ASCII")
+            errorMsg = ("The public key you entered is invalid")
+            
             try:
 
                 return render_template("rsa.html",
@@ -70,9 +75,7 @@ class RSABlueprint(BaseBlueprint):
         
             except TemplateNotFound:
             
-                abort(404)"""
-        
-        encryptedText = str(self.algo.encrypt(message, key))
+                abort(404)
         
         try:
 
@@ -92,14 +95,17 @@ class RSABlueprint(BaseBlueprint):
     
     def displayDecryptedText(self):
         
+        """This method is called when a request is sent to /rsa/decryption"""
+        
         message = request.form["message"]
         key = request.form["key_area"]
         
-        """if len(bytes(key, encoding='utf-8')) not in range(8, 16, 24):
+        decryptedText = self.algo.decrypt(message, key)
+        
+        if decryptedText==0: # If the key provided is invalid
             
-            errorMsg = ("This key is not valid. Please enter a key of 64, "
-                        "128 or 192 bits. This amounts to 8, 16 or 24 "
-                        "characters in ASCII")
+            errorMsg = ("The private key you entered is invalid")
+            
             try:
 
                 return render_template("rsa.html",
@@ -113,9 +119,28 @@ class RSABlueprint(BaseBlueprint):
         
             except TemplateNotFound:
             
-                abort(404)"""
+                abort(404)
+                
+        elif decryptedText==1: # If the encrypted message provided is not in Base 64
+            
+            errorMsg = ("The message you want to decrypt must be encoded in"
+                        " base 64")
+            
+            try:
+
+                return render_template("rsa.html",
+                                   mode="decryptionError",
+                                   error=errorMsg,
+                                   allAlgos=self._allAlgosSorted, 
+                                   historicalAlgos=self._historicalAlgosSorted, 
+                                   outdatedAlgos=self._outdatedAlgosSorted,
+                                   modernAlgos=self._modernAlgosSorted,
+                                   hashingAlgos=self._hashingAlgosSorted)
         
-        decryptedText = self.algo.decrypt(message, key)
+            except TemplateNotFound:
+            
+                abort(404)
+                    
         
         try:
 
@@ -133,6 +158,8 @@ class RSABlueprint(BaseBlueprint):
             abort(404)
 
     def displayKeysPair(self):
+        
+        """This method is called when a request is sent to /rsa/keysgeneration"""
         
         keysPair = self.algo.generateKeysPair()
         

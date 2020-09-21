@@ -155,7 +155,7 @@ class VigenereCipher(EncryptionInterface):
 
             return key
 
-        
+
 
         originalKey = key
 

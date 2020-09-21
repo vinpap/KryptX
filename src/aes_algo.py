@@ -14,7 +14,7 @@ class AdvancedEncryptionStandard(EncryptionInterface):
 
         self.logger = logging.getLogger(__name__)
         fh = logging.handlers.RotatingFileHandler('logs/' + __name__ + '.log', maxBytes=10000000, backupCount=100)
-        fh.setFormatter(logging.Formatter(fmt ='%(asctime)s - %(levelname)s - %(name)s - %(message)s'))
+        fh.setFormatter(logging.Formatter(fmt='%(asctime)s - %(levelname)s - %(name)s - %(message)s'))
         self.logger.addHandler(fh)
 
 
@@ -53,10 +53,30 @@ class AdvancedEncryptionStandard(EncryptionInterface):
             return False
 
         userKey = bytes(key, encoding='utf-8')
-        message = bytes.fromhex(message)
+
+        # The section below checks if the encrypted message is encoded in hexa
+
+        try:
+
+            message = bytes.fromhex(message)
+
+        except ValueError:
+
+            return 1
 
         ctr = Counter.new(128)
         decryptor = AES.new(userKey, AES.MODE_CTR, counter=ctr)
         decryptedMessage = decryptor.decrypt(message)
 
-        return decryptedMessage.decode("utf-8")
+        # When the key given for the decryption is wrong, a UnicodeDecodeError
+        # exception is often raised when we try to decode the decrypted message
+        # (which should be encoded in UTF-8). The code below handles the
+        # exception so that the method returns 0 and the app does not crash.
+
+        try:
+
+            return decryptedMessage.decode("utf-8")
+
+        except UnicodeDecodeError:
+
+            return 0

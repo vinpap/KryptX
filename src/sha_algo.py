@@ -1,4 +1,4 @@
-"""Implementation of the MD5 hashing function"""
+"""Implementation of the SHA512 hashing function"""
 
 import logging
 import logging.handlers
@@ -26,10 +26,8 @@ class SHA(EncryptionInterface):
 
         result = hashlib.sha512(message.encode())
 
-
         return result.hexdigest()
 
     def decrypt(self, message, key=0):
 
         return False
-    

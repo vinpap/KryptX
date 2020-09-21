@@ -54,16 +54,35 @@ class DES(EncryptionInterface):
 
             self.logger.error("Error during the decryption of a message with DES. The key must be an string in ASCII format of length 8, 16 or 24")
             return False
-        
-        message = bytes.fromhex(message)
+
+        # The section below checks if the encrypted message is encoded in hexa
+
+        try:
+
+            message = bytes.fromhex(message)
+
+        except ValueError:
+
+            return 1
 
         userKey = DesKey(bytes(key, encoding='utf-8'))
-
-        print("Key is for 3DES algorithm: " + str(userKey.is_triple()))
-        print("Longueur du message à décrypter: ")
-        print(len(message))
-
         decryptedMessage = userKey.decrypt(message, padding=True)
 
-        return decryptedMessage.decode("utf-8")
-    
+        # When the key given for the decryption is wrong, a UnicodeDecodeError
+        # exception is often raised when we try to decode the decrypted message
+        # (which should be encoded in UTF-8). The code below handles the
+        # exception so that the method returns 0 and the app does not crash.
+
+        try:
+
+            decryptedMessage = decryptedMessage.decode("utf-8")
+
+        except UnicodeDecodeError:
+
+            return 0
+
+        if len(decryptedMessage) == 0: # Happens when the key is wrong
+
+            return 0
+
+        return decryptedMessage

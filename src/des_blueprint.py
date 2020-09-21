@@ -7,6 +7,9 @@ from jinja2 import TemplateNotFound
 from baseblueprint import BaseBlueprint
 from des_algo import DES
 
+"""The class below is a blueprint loaded by Flask. See baseblueprint.py for
+more info"""
+
 class DESBlueprint(BaseBlueprint):
     
     def __init__(self):
@@ -47,12 +50,13 @@ class DESBlueprint(BaseBlueprint):
 
     def displayEncryptedText(self):
         
+        """This method is called when a request is sent to /des/encryption"""
+        
         message = request.form["message"]
         key = request.form["key_area"]
         
         
-        
-        if len(bytes(key, encoding='utf-8')) not in range(8, 16, 24):
+        if len(bytes(key, encoding='utf-8')) not in (8, 16, 24):
             
             errorMsg = ("This key is not valid. Please enter a key of 64, "
                         "128 or 192 bits. This amounts to 8, 16 or 24 "
@@ -92,10 +96,12 @@ class DESBlueprint(BaseBlueprint):
     
     def displayDecryptedText(self):
         
+        """This method is called when a request is sent to /des/decryption"""
+        
         message = request.form["message"]
         key = request.form["key_area"]
         
-        if len(bytes(key, encoding='utf-8')) not in range(8, 16, 24):
+        if len(bytes(key, encoding='utf-8')) not in (8, 16, 24):
             
             errorMsg = ("This key is not valid. Please enter a key of 64, "
                         "128 or 192 bits. This amounts to 8, 16 or 24 "
@@ -116,6 +122,47 @@ class DESBlueprint(BaseBlueprint):
                 abort(404)
         
         decryptedText = self.algo.decrypt(message, key)
+        
+        if decryptedText == 0: # Value returned when the key is wrong
+            
+            errorMsg =("Error during the decryption of the message. Please make"
+                       " sure you are using a valid key")
+            
+            try:
+                
+                return render_template("des.html",
+                                   mode="decryptionError",
+                                   error=errorMsg,
+                                   allAlgos=self._allAlgosSorted, 
+                                   historicalAlgos=self._historicalAlgosSorted, 
+                                   outdatedAlgos=self._outdatedAlgosSorted,
+                                   modernAlgos=self._modernAlgosSorted,
+                                   hashingAlgos=self._hashingAlgosSorted)
+            
+            except TemplateNotFound:
+            
+                abort(404)
+        
+        elif decryptedText == 1: # Value returned when the encrypted text is not in hexa
+            
+            errorMsg =("Error during the decryption of the message. Please make"
+                       " sure the message you want to decrypt is encoded in"
+                       " hexadecimal")
+            
+            try:
+                
+                return render_template("des.html",
+                                   mode="decryptionError",
+                                   error=errorMsg,
+                                   allAlgos=self._allAlgosSorted, 
+                                   historicalAlgos=self._historicalAlgosSorted, 
+                                   outdatedAlgos=self._outdatedAlgosSorted,
+                                   modernAlgos=self._modernAlgosSorted,
+                                   hashingAlgos=self._hashingAlgosSorted)
+            
+            except TemplateNotFound:
+            
+                abort(404)
         
         try:
 

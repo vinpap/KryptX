@@ -7,6 +7,9 @@ from jinja2 import TemplateNotFound
 from baseblueprint import BaseBlueprint
 from caesarcipher_algo import CaesarCipher
 
+"""The class below is a blueprint loaded by Flask. See baseblueprint.py for
+more info"""
+
 class CaesarCipherBlueprint(BaseBlueprint):
     
     def __init__(self):
@@ -48,9 +51,10 @@ class CaesarCipherBlueprint(BaseBlueprint):
 
     def displayEncryptedText(self):
         
+        """This method is called when a request is sent to /caesarcipher/encryption"""
+        
         message = request.form["message"]
         key = request.form["key_area"]
-        
         
         
         try:
@@ -96,6 +100,8 @@ class CaesarCipherBlueprint(BaseBlueprint):
     
     def displayDecryptedText(self):
         
+        """This method is called when a request is sent to /caesarcipher/decryption"""
+        
         message = request.form["message"]
         key = request.form["key_area"]
         
@@ -138,9 +144,3 @@ class CaesarCipherBlueprint(BaseBlueprint):
         except TemplateNotFound:
             
             abort(404)
-
-
-    
-    
-
-             

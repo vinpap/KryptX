@@ -26,10 +26,8 @@ class MD5(EncryptionInterface):
 
         result = hashlib.md5(message.encode())
 
-
         return result.hexdigest()
 
     def decrypt(self, message, key=0):
 
         return False
-    

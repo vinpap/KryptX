@@ -56,7 +56,16 @@ class Blowfish(EncryptionInterface):
             self.logger.error("Error during the decryption of a message with Blowfish. The key must be between 4 and 56 bytes long")
             return False
         
-        message = bytes.fromhex(message)
+        # The section below checks if the encrypted message is encoded in hexa
+        
+        try:
+            
+            message = bytes.fromhex(message)
+        
+        except ValueError: 
+            
+            return 1
+        
 
         cipher = blowfish.Cipher(bytes(key, encoding='utf-8'))
 
@@ -64,6 +73,16 @@ class Blowfish(EncryptionInterface):
 
         decryptedMessage = b"".join(cipher.decrypt_ctr(message, decryptionCounter))
 
+        # When the key given for the decryption is wrong, a UnicodeDecodeError
+        # exception is often raised when we try to decode the decrypted message
+        # (which should be encoded in UTF-8). The code below handles the
+        # exception so that the method returns 0 and the app does not crash.
 
-        return decryptedMessage.decode('utf-8')
+        try:
+            
+            return decryptedMessage.decode("utf-8")
+        
+        except UnicodeDecodeError:
+            
+            return 0
     

@@ -101,4 +101,3 @@ class CaesarCipher(EncryptionInterface):
                 decryptedMessage = decryptedMessage + i
 
         return decryptedMessage
-    
