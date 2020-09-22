@@ -34,8 +34,6 @@ class DES(EncryptionInterface):
 
         userKey = DesKey(bytes(key, encoding='utf-8'))
 
-        print("Key is for 3DES algorithm: " + str(userKey.is_triple()))
-
         encryptedMessage = userKey.encrypt(bytes(message, encoding='utf-8'), padding=True)
         print(encryptedMessage)
 
